@@ -1,0 +1,29 @@
+
+Gardenzilla Development Notes
+
+***
+
+Here we wrote all the technical questions
+and solutions that we use in development.
+
+Backlog
+    - Catalog
+        - ID
+        - Title
+        - Producer
+        - Description
+        - 
+    - User
+    - Petty Cash
+    - Issue
+    - Notification
+    - Stock
+
+Product Catalog
+
+    Methods:
+        new() -> Self
+
+
+
+
