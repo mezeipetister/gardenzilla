@@ -1,4 +1,4 @@
-![Gardenzilla logo](logo.svg =200x)
+![Gardenzilla logo](logo.svg width=200)
 
 Logo has copyright. All right reserved.  
 Gardenzilla 2020.
