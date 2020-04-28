@@ -1,0 +1,50 @@
+// Copyright (C) 2020 Peter Mezei
+//
+// This file is part of Gardenzilla.
+//
+// Gardenzilla is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 2 of the License, or
+// (at your option) any later version.
+//
+// Gardenzilla is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Gardenzilla.  If not, see <http://www.gnu.org/licenses/>.
+
+use crate::guard::Login;
+use crate::prelude::*;
+use crate::DataLoad;
+use core_lib::model::*;
+use rocket::State;
+
+#[get("/cash_register/all")]
+pub fn cash_register_all_get(
+    _user: Login,
+    data: State<DataLoad>,
+) -> Result<StatusOk<Vec<Transaction>>, ApiError> {
+    let cash_register = data.inner().cash_register.lock()?;
+    let res = core_lib::cash_register::get_all_transaction(&*cash_register);
+    Ok(StatusOk(res.clone()))
+}
+
+#[get("/cash_register/new/<amount>")]
+pub fn cash_register_new_put(
+    _user: Login,
+    data: State<DataLoad>,
+    amount: i32,
+) -> Result<StatusOk<()>, ApiError> {
+    let mut cash_register = data.inner().cash_register.lock()?;
+    let transaction = Transaction::new(
+        amount,
+        TransactionKind::Purchase {
+            pruchaseId: "0".to_string(),
+        },
+        _user.userid().to_string(),
+    );
+    core_lib::cash_register::add_new_transaction(&mut *cash_register, transaction);
+    Ok(StatusOk(()))
+}

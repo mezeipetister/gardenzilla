@@ -15,8 +15,4 @@
 // You should have received a copy of the GNU General Public License
 // along with BIT.  If not, see <http://www.gnu.org/licenses/>.
 
-pub mod account;
-pub mod asset;
-pub mod project;
-pub mod repository;
-pub mod transaction;
+pub mod cash_register;

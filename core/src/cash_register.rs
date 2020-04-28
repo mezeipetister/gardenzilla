@@ -1,32 +1,27 @@
 // Copyright (C) 2020 Peter Mezei
 //
-// This file is part of GNStore.
+// This file is part of Gardenzilla.
 //
-// GNStore is free software: you can redistribute it and/or modify
+// Gardenzilla is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// GNStore is distributed in the hope that it will be useful,
+// Gardenzilla is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with GNStore.  If not, see <http://www.gnu.org/licenses/>.
+// along with Gardenzilla.  If not, see <http://www.gnu.org/licenses/>.
 
-pub trait CashRegister {
-    /// Add money to a cash_register,
-    /// returns the latest balance.
-    fn add_money(
-        &mut self,
-        // Who made the transaction
-        // not customer
-        userid: String,
-        // Now its only HUF & integer
-        money: u32,
-        // If transaction
-        cartId: Option<usize>,
-        comment: String,
-    ) -> u32;
+pub use crate::model::version::cash_register::v1::*;
+use storaget::*;
+
+pub fn get_all_transaction(register: &Pack<CashRegister>) -> &Vec<Transaction> {
+    register.unpack().get_transactions()
+}
+
+pub fn add_new_transaction(register: &mut Pack<CashRegister>, transaction: Transaction) {
+    register.as_mut().unpack().add_transaction(transaction);
 }

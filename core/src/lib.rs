@@ -23,10 +23,12 @@ extern crate nanoid;
 extern crate rand;
 extern crate storaget;
 
+pub mod cash_register;
 pub mod check;
 pub mod email;
 pub mod error;
 pub mod folder;
+pub mod id;
 pub mod login;
 pub mod model;
 pub mod password;

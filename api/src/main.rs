@@ -1,19 +1,19 @@
 // Copyright (C) 2020 Peter Mezei
 //
-// This file is part of GNStore.
+// This file is part of Gardenzilla.
 //
-// GNStore is free software: you can redistribute it and/or modify
+// Gardenzilla is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 2 of the License, or
 // (at your option) any later version.
 //
-// GNStore is distributed in the hope that it will be useful,
+// Gardenzilla is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with GNStore.  If not, see <http://www.gnu.org/licenses/>.
+// along with Gardenzilla.  If not, see <http://www.gnu.org/licenses/>.
 
 #![feature(proc_macro_hygiene, decl_macro, plugin)]
 
@@ -116,40 +116,8 @@ fn rocket(data: DataLoad) -> rocket::Rocket {
                 controller::user::user_all_get,
                 controller::user::user_id_get,
                 controller::user::user_new_post,
-                controller::repository::repository_all_get,
-                controller::repository::repository_new_put,
-                controller::repository::repository_remove_post,
-                controller::repository::repository_restore_post,
-                controller::repository::repository_update_post,
-                controller::repository::repository_id_get,
-                controller::account::account_all_get,
-                controller::account::account_new_put,
-                controller::account::account_id_get,
-                controller::account::account_update_post,
-                controller::transaction::transaction_all_get,
-                controller::transaction::transaction_new_put,
-                controller::transaction::transaction_id_get,
-                controller::ledger::ledger_get,
-                controller::ledger::ledger_stat_get,
-                controller::asset::asset_all_get,
-                controller::asset::asset_new_put,
-                controller::asset::asset_id_get,
-                controller::asset::asset_update_post,
-                controller::asset::asset_remove_post,
-                controller::asset::asset_restore_post,
-                controller::asset::asset_statistics_by_clearing_get,
-                controller::asset::asset_depreciation_yearly_get,
-                controller::asset::asset_depreciation_monthly_get,
-                controller::project::project_new_put,
-                controller::project::project_all_get,
-                controller::project::project_id_get,
-                controller::project::project_update_post,
-                controller::project::project_remove_post,
-                controller::project::project_enable_post,
-                controller::project::project_disable_post,
-                controller::project::project_transaction_new_put,
-                controller::project::project_transaction_remove_post,
-                controller::project::project_ledger_stat_get
+                controller::cash::cash_register_all_get,
+                controller::cash::cash_register_new_put
             ],
         )
         .register(catchers![not_found, unauthorized, form_error])
@@ -157,15 +125,16 @@ fn rocket(data: DataLoad) -> rocket::Rocket {
 
 pub struct DataLoad {
     users: Mutex<VecPack<User>>,
-    repositories: Mutex<VecPack<Repository>>,
+    cash_register: Mutex<Pack<CashRegister>>,
 }
 
 fn main() -> PackResult<()> {
     let data = DataLoad {
         users: Mutex::new(VecPack::try_load_or_init(PathBuf::from("data/users"))?),
-        repositories: Mutex::new(VecPack::try_load_or_init(PathBuf::from(
-            "data/repositories",
-        ))?),
+        cash_register: Mutex::new(Pack::try_load_or_init(
+            PathBuf::from("data/cash_register"),
+            "default",
+        )?),
     };
     rocket(data).launch();
     Ok(())
