@@ -26,8 +26,13 @@ pub fn cash_register_all_get(
     _user: Login,
     data: State<DataLoad>,
 ) -> Result<StatusOk<Vec<Transaction>>, ApiError> {
-    let cash_register = data.inner().cash_register.lock()?;
-    let res = core_lib::cash_register::get_all_transaction(&*cash_register);
+    let res = data
+        .inner()
+        .cash_register
+        .lock()?
+        .unpack()
+        .get_transactions()
+        .clone();
     Ok(StatusOk(res.clone()))
 }
 
