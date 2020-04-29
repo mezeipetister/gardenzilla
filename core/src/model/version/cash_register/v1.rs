@@ -39,7 +39,7 @@ impl CashRegister {
         self.balance += transaction.get_amount();
         // Push transaction to store
         self.transactions.push(transaction);
-        self.transactions[self.transactions.len()].get_id()
+        self.transactions[self.transactions.len() - 1].get_id()
     }
     /// Get transactions as a ref vector
     pub fn get_transactions_all(&self) -> &Vec<Transaction> {
@@ -134,9 +134,10 @@ impl CashRegister {
         kind: TransactionKind,
         created_by: String,
     ) -> &str {
-        let mut id = id::generate_alphanumeric(5);
+        let mut id = id::generate_alphanumeric(7);
+        // TODO: Fix this issue: generate new ID while its free
         if !self.check_transaction_id_available(&id) {
-            id = id::generate_alphanumeric(5);
+            id = id::generate_alphanumeric(7);
         }
         let transaction = Transaction::new(id, amount, kind, created_by);
         self.add_transaction(transaction)
