@@ -73,7 +73,7 @@ impl CashRegister {
     /// Good to know that we manage dates as DateTime UTC,
     /// but in the query we use NaiveDate. So we convert
     /// DateTime<Utc> to NaiveDateTime and cenvert it to NaiveDate.
-    pub fn get_transaction_between_date_range(
+    pub fn get_transaction_between_date(
         &self,
         from: NaiveDate,
         till: NaiveDate,
@@ -87,7 +87,7 @@ impl CashRegister {
             .collect::<Vec<&Transaction>>()
     }
     /// Get transactions ref between DateTime<Utc> range
-    pub fn get_transaction_between_datetime_range(
+    pub fn get_transaction_between_datetime_utc(
         &self,
         from: DateTime<Utc>,
         till: DateTime<Utc>,
@@ -102,6 +102,24 @@ impl CashRegister {
     }
     pub fn get_balance(&self) -> i32 {
         self.balance
+    }
+    pub fn get_balance_till_datetime_utc(&self, till: DateTime<Utc>) -> i32 {
+        self.transactions
+            .iter()
+            .filter(|t| t.date_created <= till)
+            .map(|t| t.get_amount())
+            .sum::<i32>()
+    }
+    pub fn get_turnover_between_datetime_utc(
+        &self,
+        from: DateTime<Utc>,
+        till: DateTime<Utc>,
+    ) -> i32 {
+        self.transactions
+            .iter()
+            .filter(|t| t.date_created >= from && t.date_created <= till)
+            .map(|t| t.get_amount())
+            .sum::<i32>()
     }
 }
 
