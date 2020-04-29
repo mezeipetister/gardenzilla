@@ -23,7 +23,7 @@ extern crate nanoid;
 extern crate rand;
 extern crate storaget;
 
-pub mod cash_register;
+pub mod cash;
 pub mod check;
 pub mod email;
 pub mod error;

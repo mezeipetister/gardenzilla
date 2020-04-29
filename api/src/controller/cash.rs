@@ -31,9 +31,20 @@ pub fn cash_register_all_get(
         .cash_register
         .lock()?
         .unpack()
-        .get_transactions()
+        .get_transactions_all()
         .clone();
-    Ok(StatusOk(res.clone()))
+    Ok(StatusOk(res))
+}
+
+#[get("/cash_register/last/<n>")]
+pub fn cash_register_last_n_get(
+    _user: Login,
+    data: State<DataLoad>,
+    n: usize,
+) -> Result<StatusOk<Vec<Transaction>>, ApiError> {
+    let reg = data.inner().cash_register.lock()?;
+    let res = core_lib::cash::get_last_n_transactions(&*reg, n);
+    Ok(StatusOk(res.to_vec()))
 }
 
 #[get("/cash_register/new/<amount>")]
@@ -45,11 +56,9 @@ pub fn cash_register_new_put(
     let mut cash_register = data.inner().cash_register.lock()?;
     let transaction = Transaction::new(
         amount,
-        TransactionKind::Purchase {
-            pruchaseId: "0".to_string(),
-        },
+        TransactionKind::new_purchase("0".to_string()),
         _user.userid().to_string(),
     );
-    core_lib::cash_register::add_new_transaction(&mut *cash_register, transaction);
+    core_lib::cash::add_new_transaction(&mut *cash_register, transaction);
     Ok(StatusOk(()))
 }

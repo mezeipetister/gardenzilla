@@ -19,9 +19,17 @@ pub use crate::model::version::cash_register::v1::*;
 use storaget::*;
 
 pub fn get_all_transaction(register: &Pack<CashRegister>) -> &Vec<Transaction> {
-    register.unpack().get_transactions()
+    register.unpack().get_transactions_all()
 }
 
 pub fn add_new_transaction(register: &mut Pack<CashRegister>, transaction: Transaction) {
     register.as_mut().unpack().add_transaction(transaction);
+}
+
+pub fn get_last_n_transactions(reg: &Pack<CashRegister>, mut n: usize) -> &[Transaction] {
+    let trans = reg.unpack().get_transactions_all();
+    if n > trans.len() {
+        n = trans.len();
+    }
+    &trans[trans.len() - n..trans.len()]
 }
