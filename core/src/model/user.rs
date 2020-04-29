@@ -102,9 +102,8 @@ impl User {
         // Validate User ID characters
         if id
             .chars()
-            .filter(|c| allowed_characters.contains(c) == false)
-            .collect::<Vec<char>>()
-            .len()
+            .filter(|c| !allowed_characters.contains(c))
+            .count()
             > 0
         {
             return Err(BadRequest(format!(
@@ -120,10 +119,10 @@ impl User {
             )));
         }
         // Validate Email content
-        if email.contains("@") == false || email.contains(".") == false {
-            return Err(BadRequest(format!(
-                "Nem megfelelő email cím. Legalább @ jelet és pontot kell tartalmaznia"
-            )));
+        if !email.contains('@') || !email.contains('.') {
+            return Err(BadRequest(
+                "Nem megfelelő email cím. Legalább @ jelet és pontot kell tartalmaznia".to_string(),
+            ));
         }
         // Validate Name length
         if name.len() > name_max_chars || name.len() < name_min_chars {
@@ -175,7 +174,7 @@ impl User {
                 "A user neve legalább 5 karakter kell, hogy legyen".into(),
             ))
         } else {
-            self.name = name.to_string();
+            self.name = name;
             Ok(())
         }
     }

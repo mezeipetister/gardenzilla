@@ -53,7 +53,20 @@ impl CashRegister {
         self.transactions
             .iter()
             .filter(|t| t.date_created.naive_utc().date() <= till)
-            .map(|t| t)
+            .collect::<Vec<&Transaction>>()
+    }
+    /// Get transactions ref vector till a given date
+    pub fn get_transactions_till_date_utc(&self, till: Date<Utc>) -> Vec<&Transaction> {
+        self.transactions
+            .iter()
+            .filter(|t| t.date_created.date() <= till)
+            .collect::<Vec<&Transaction>>()
+    }
+    /// Get transactions ref vector till a given date
+    pub fn get_transactions_till_datetime_utc(&self, till: DateTime<Utc>) -> Vec<&Transaction> {
+        self.transactions
+            .iter()
+            .filter(|t| t.date_created <= till)
             .collect::<Vec<&Transaction>>()
     }
     /// Get transactions ref between date range
@@ -71,7 +84,17 @@ impl CashRegister {
                 t.date_created.naive_utc().date() >= from
                     && t.date_created.naive_utc().date() <= till
             })
-            .map(|t| t)
+            .collect::<Vec<&Transaction>>()
+    }
+    /// Get transactions ref between DateTime<Utc> range
+    pub fn get_transaction_between_datetime_range(
+        &self,
+        from: DateTime<Utc>,
+        till: DateTime<Utc>,
+    ) -> Vec<&Transaction> {
+        self.transactions
+            .iter()
+            .filter(|t| t.date_created >= from && t.date_created <= till)
             .collect::<Vec<&Transaction>>()
     }
     pub fn get_transaction_by_id(&self, id: &str) -> Option<&Transaction> {

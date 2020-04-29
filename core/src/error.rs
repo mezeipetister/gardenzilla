@@ -16,7 +16,6 @@
 // along with Gardenzilla.  If not, see <http://www.gnu.org/licenses/>.
 
 use std::fmt;
-use storaget;
 
 pub enum Error {
     BadRequest(String),

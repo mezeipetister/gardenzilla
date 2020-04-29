@@ -21,7 +21,6 @@ use crate::error::Error::*;
 use crate::prelude::*;
 use lettre::smtp::authentication::Credentials;
 use lettre::{SmtpClient, Transport};
-use lettre_email;
 use std::env;
 
 pub trait Email<'a> {
@@ -59,7 +58,7 @@ impl<'a> Email<'a> for EmailData<'a> {
         // Validate TO email address
         check_email(self.to)?;
         // Check subject and body
-        if self.subject.len() == 0 || self.body.len() == 0 {
+        if self.subject.is_empty() || self.body.is_empty() {
             return Err(InternalError("Empty subject or body.".into()));
         }
         if self.is_dummy {
