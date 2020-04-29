@@ -34,11 +34,12 @@ pub struct CashRegister {
 impl CashRegister {
     /// Add Transaction to CashRegister
     /// You need to know exactly the transaction type
-    pub fn add_transaction(&mut self, transaction: Transaction) {
+    pub fn add_transaction(&mut self, transaction: Transaction) -> &str {
         // Update balance
         self.balance += transaction.get_amount();
         // Push transaction to store
         self.transactions.push(transaction);
+        self.transactions[self.transactions.len()].get_id()
     }
     /// Get transactions as a ref vector
     pub fn get_transactions_all(&self) -> &Vec<Transaction> {
@@ -121,6 +122,32 @@ impl CashRegister {
             .map(|t| t.get_amount())
             .sum::<i32>()
     }
+    pub fn check_transaction_id_available(&self, id: &str) -> bool {
+        self.transactions
+            .iter()
+            .find(|t| t.get_id() == id)
+            .is_none()
+    }
+    pub fn add_new_transaction(
+        &mut self,
+        amount: i32,
+        kind: TransactionKind,
+        created_by: String,
+    ) -> &str {
+        let mut id = id::generate_alphanumeric(5);
+        if !self.check_transaction_id_available(&id) {
+            id = id::generate_alphanumeric(5);
+        }
+        let transaction = Transaction::new(id, amount, kind, created_by);
+        self.add_transaction(transaction)
+    }
+    pub fn get_last_n_transactions(&self, mut n: usize) -> &[Transaction] {
+        let trans = self.get_transactions_all();
+        if n > trans.len() {
+            n = trans.len();
+        }
+        &trans[trans.len() - n..trans.len()]
+    }
 }
 
 // Default implementation for
@@ -144,9 +171,9 @@ pub struct Transaction {
 }
 
 impl Transaction {
-    pub fn new(amount: i32, kind: TransactionKind, created_by: String) -> Self {
+    fn new(id: String, amount: i32, kind: TransactionKind, created_by: String) -> Self {
         Transaction {
-            id: id::generate_alphanumeric(5),
+            id,
             amount,
             kind,
             created_by,
