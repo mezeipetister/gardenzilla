@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Gardenzilla.  If not, see <http://www.gnu.org/licenses/>.
 
+use chrono::prelude::{DateTime, Utc};
 use rocket::http::{ContentType, Status};
 use rocket::response::{Responder, Response};
 use rocket::Request;
@@ -165,6 +166,23 @@ impl From<storaget::PackError> for ApiError {
             storaget::PackError::IDTaken => {
                 ApiError::BadRequest("A megadott ID már foglalt!".to_string())
             }
+        }
+    }
+}
+
+pub trait ToDateTimeUtc {
+    fn to_datetime_utc(&self) -> Result<DateTime<Utc>, ApiError>;
+}
+
+impl ToDateTimeUtc for &str {
+    #[inline(always)]
+    fn to_datetime_utc(&self) -> Result<DateTime<Utc>, ApiError> {
+        match DateTime::parse_from_rfc3339(&self) {
+            Ok(dtfixed) => Ok(dtfixed.with_timezone(&Utc)),
+            Err(_) => Err(ApiError::BadRequest(format!(
+                "Wrong date format: {}. Please use proper rfc3339.",
+                self
+            ))),
         }
     }
 }

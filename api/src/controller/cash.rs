@@ -20,8 +20,6 @@ use crate::prelude::*;
 use crate::DataLoad;
 use chrono::prelude::*;
 use core_lib::model::*;
-use rocket::http::RawStr;
-use rocket::request::FromParam;
 use rocket::State;
 
 #[get("/cash_register/all")]
@@ -53,23 +51,6 @@ pub fn cash_register_last_n_get(
         .get_last_n_transactions(n)
         .to_vec();
     Ok(StatusOk(res))
-}
-
-pub trait ToDateTimeUtc {
-    fn to_datetime_utc(&self) -> Result<DateTime<Utc>, ApiError>;
-}
-
-impl ToDateTimeUtc for &str {
-    #[inline(always)]
-    fn to_datetime_utc(&self) -> Result<DateTime<Utc>, ApiError> {
-        match DateTime::parse_from_rfc3339(&self) {
-            Ok(dtfixed) => Ok(dtfixed.with_timezone(&Utc)),
-            Err(_) => Err(ApiError::BadRequest(format!(
-                "Wrong date format: {}. Please use proper rfc3339.",
-                self
-            ))),
-        }
-    }
 }
 
 #[get("/cash_register/daterange/<from>/<till>")]
