@@ -118,7 +118,8 @@ fn rocket(data: DataLoad) -> rocket::Rocket {
                 controller::user::user_new_post,
                 controller::cash::cash_register_all_get,
                 controller::cash::cash_register_last_n_get,
-                controller::cash::cash_register_new_put
+                controller::cash::cash_register_new_put,
+                controller::cash::cash_register_daterange_get,
             ],
         )
         .register(catchers![not_found, unauthorized, form_error])
