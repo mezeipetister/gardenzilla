@@ -53,6 +53,25 @@ pub fn cash_register_last_n_get(
     Ok(StatusOk(res))
 }
 
+#[get("/cash_register/daterange/<till>")]
+pub fn cash_register_till_datetime_get(
+    _user: Login,
+    data: State<DataLoad>,
+    till: String,
+) -> Result<StatusOk<Vec<Transaction>>, ApiError> {
+    let tillutc: DateTime<Utc> = till.as_str().to_datetime_utc()?;
+    let res = data
+        .inner()
+        .cash_register
+        .lock()?
+        .unpack()
+        .get_transactions_till_datetime_utc(tillutc)
+        .iter()
+        .map(|t| (**t).clone())
+        .collect::<Vec<Transaction>>();
+    Ok(StatusOk(res))
+}
+
 #[get("/cash_register/daterange/<from>/<till>")]
 pub fn cash_register_daterange_get(
     _user: Login,
@@ -74,7 +93,7 @@ pub fn cash_register_daterange_get(
     Ok(StatusOk(res))
 }
 
-#[get("/cash_register/new/<amount>")]
+#[put("/cash_register/new/<amount>")]
 pub fn cash_register_new_put(
     _user: Login,
     data: State<DataLoad>,

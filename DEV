@@ -7,23 +7,77 @@ Here we wrote all the technical questions
 and solutions that we use in development.
 
 Backlog
-    - Catalog
-        - ID
-        - Title
-        - Producer
-        - Description
-        - 
+
+    Catalog
+    =======
+
+    Core product data such as
+    name, description, manufacturer
+
+    Q:  Physical data? For service?
+        What about product and package Physical
+        dimensions? Should we store all together,
+        like width, height, length and weight?
+
+    Q:  Product badges? How to manage product category
+        specific variables, such as hazard category, or
+        any specific authority permit?
+
+    Q:  How to manage stock for services? Physical products
+        have stock and stock management, but a service does
+        not have in any cases. There could be products with
+        stock management and without stock management.
+
+    Source
+    ======
+    
+    Multiple source per product. Place to find
+    source and related price.
+
+    Q:  Each product could be sourcable from multiple sources.
+        And price might vary between orders within the same source.
+        Should we manage source price history?
+
+    Q:  How to update source product price? Based on the actual order
+        price? And auto sync, or just suggest to update? Should we manage
+        two prices? One list price and one real/historical price?
+
+    Custom Product Inventory
+    ========================
+
+    Register each product individually, and design the whole sales
+    process based on it. Better expiration date management, better
+    product and service quality, added marketing potential based on
+    the custom branded QR code per product.
+
+    Q:  Fast and painles sales process?
+        How?
+
+    Q:  Fast and painless inventory?
+        How?
+
+    Q:  How many information should be stored and where per product?
+        How long should we store those data?
+
+    Stock
+    =====
+    
+    Multiple inventory, product move between stocks, stockin,
+    stockout.
+
+    Q:  Fast and painless stock in process?
+        How?
+
+    Q:  How to work well with custom product
+        inventory?
+
     - User
+        * List, create, manage user data.
     - Petty Cash
+        * All the money in/out.
     - Issue
+        * Create, list, edit, comment, open, close issue.
     - Notification
-    - Stock
-
-Product Catalog
-
-    Methods:
-        new() -> Self
-
-
+        * Manage notification system wide.
 
 

@@ -62,7 +62,7 @@ struct ApiWelcomeSchema {
 #[get("/")]
 fn api_welcome(_user: Login) -> StatusOk<ApiWelcomeSchema> {
     StatusOk(ApiWelcomeSchema {
-        message: "Welcome to Gardenova API",
+        message: "Welcome to Gardenzilla API",
     })
 }
 
@@ -120,6 +120,7 @@ fn rocket(data: DataLoad) -> rocket::Rocket {
                 controller::cash::cash_register_last_n_get,
                 controller::cash::cash_register_new_put,
                 controller::cash::cash_register_daterange_get,
+                controller::cash::cash_register_till_datetime_get
             ],
         )
         .register(catchers![not_found, unauthorized, form_error])
