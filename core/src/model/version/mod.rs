@@ -16,5 +16,6 @@
 // along with BIT.  If not, see <http://www.gnu.org/licenses/>.
 
 pub mod cash_register;
+pub mod customer;
 pub mod issue;
 pub mod product;

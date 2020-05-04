@@ -15,51 +15,41 @@
 // You should have received a copy of the GNU General Public License
 // along with Gardenzilla.  If not, see <http://www.gnu.org/licenses/>.
 
-use crate::id;
-use chrono::prelude::*;
-use serde::{Deserialize, Serialize};
-use storaget::*;
+// use crate::id;
+// use chrono::prelude::*;
+// use serde::{Deserialize, Serialize};
+// use storaget::*;
 
-impl TryFrom for Product {
-    type TryFrom = Product;
-}
+// impl TryFrom for Product {
+//     type TryFrom = Product;
+// }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
-pub struct Product {
-    id: String,
-    name: String,
-    description: String,
-    manufacturer: Manufacturer,
-    badges: Option<Vec<Badge>>,
-    physical_package: Option<PhysicalDetails>,
-}
+// #[derive(Serialize, Deserialize, Clone, Debug)]
+// pub struct Product {
+//     id: String,
+//     name: String,
+//     description: String,
+//     manufacturer: Manufacturer,
+//     hazard_category: HazardCategory,
+//     badges: Option<Vec<Badge>>,
+//     physical_package: Option<PhysicalDetails>,
+// }
 
-pub enum Unit {
-    G,
-    Dkg,
-    Kg,
-    Q,
-    T,
-    Mm,
-    Cm,
-    M,
-    Km,
-    Ml,
-    Cl,
-    Dl,
-    L,
-    Hl,
-}
+// pub enum HazardCategory {
+//     I,
+//     II,
+//     III,
+// }
 
-pub struct Manufacturer {
-    name: String,
-}
+// pub struct Manufacturer {
+//     name: String,
+// }
 
-pub struct PhysicalDetails {
-    weight_g: f32,
-    height_mm: f32,
-    width_mm: f32,
-    length_mm: f32,
-}
+// pub struct PhysicalDetails {
+//     weight_g: f32,
+//     height_mm: f32,
+//     width_mm: f32,
+//     length_mm: f32,
+// }
 
-pub struct Badge {}
+// pub struct Badge {}

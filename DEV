@@ -28,6 +28,9 @@ Backlog
         not have in any cases. There could be products with
         stock management and without stock management.
 
+    Q:  History. Should we store the inc changes? And how
+        detaild?
+
     Source
     ======
     
@@ -71,13 +74,34 @@ Backlog
     Q:  How to work well with custom product
         inventory?
 
-    - User
-        * List, create, manage user data.
-    - Petty Cash
-        * All the money in/out.
-    - Issue
-        * Create, list, edit, comment, open, close issue.
-    - Notification
-        * Manage notification system wide.
+    User
+    ====
 
+    List, create, manage user data.
 
+    Customer
+    ========
+
+    Petty Cash
+    ==========
+    
+    All the money in/out.
+
+    Issue
+    =====
+    
+    Create, list, edit, comment, open, close issue.
+
+    Notification
+    ============
+    
+    Manage notification system wide.
+
+    Cart
+    ====
+
+    POS process
+    ===========
+
+    Reservation system
+    ===========
