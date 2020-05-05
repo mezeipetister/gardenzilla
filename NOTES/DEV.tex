@@ -2,10 +2,31 @@
 \usepackage{hyperref}
 \usepackage{datetime}
 \usepackage{graphicx}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{todonotes}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
 \hypersetup{
     colorlinks=true,
     linktoc=all,
     linkcolor=blue,
+}
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
 }
 \author{Peter Mezei}
 \title{Gardenzilla \\ development notes}
@@ -33,7 +54,94 @@
 \newpage
 \section{Introduction}
 \newpage
+
+% section MODULES
+% ***************
 \section{Modules}
+
+\subsection{Customers}
+
+We manage customers as independent data objects, and manage a customer
+object through its implemented methods, or via public functions inside
+core::customer module.
+
+\begin{figure}[!htb]
+  \caption{Customer object}
+  \begin{verbatim}
+    pub struct Customer {
+      id: String,
+      related_users: Vec<String>,
+      name: String,
+      tax_number: String,
+      address: InvoiceAddress,
+      phone: String,
+      email: String,
+      date_created: DateTime<Utc>,
+      created_by: String,
+    }
+  \end{verbatim}
+\end{figure}
+
+Where:
+
+\begin{description}
+  \item[id] \hfill
+    \\ Customer unique identifier \todo {Describe and set the way we manage IDs.}
+  \item[related\_users] \hfill
+    \\ vector of related user ID. User and Customer objects are independent
+    of each other, as we can have customer without a user, and we can have
+    - at least in theory - a user without a customer. Customer can
+    purchase, User can login and interact withing the client. To manage
+    Customer <-> User relations, we store them as a related ID list in
+    each other. Here in a Customer object thats why we have this
+    related\_users vector.
+
+  \item[name] \hfill
+    \\ name as string of the customer
+
+  \item[tax\_number] \hfill
+    \\ tax number as string
+  \item[address] \hfill
+    \\ address as InvoiceAddress object \todo{display InoviceAddress}
+  \item[phone] \hfill
+    \\ phone number as string
+  \item[email] \hfill
+    \\ email as string
+  \item[date\_created] \hfill
+    \\ date as chrono::DateTime<Utc>
+  \item[created\_by] \hfill
+    \\ userid as string, who created this object \todo{describe datecreated
+      and created by somewhere as we use them everywhere}
+\end{description}
+
+\subsubsection{Methods}
+
+\begin{description}
+  \item[new(\dots) -> Self] \hfill
+    \\ creates a new instance of Customer. ID cannot be changed after
+    creation
+  \item[get\_id() -> \&str] \hfill
+    \\ returns customer id as \&str
+  \item[get\_name() -> \&str] \hfill
+    \\ returns customer name as \&str
+  \item[set\_name(name: String)] \hfill
+    \\ set customer name to the given new one
+  \item[has\_user() -> bool] \hfill
+    \\ returns bool if there is at least one related user
+  \item[get\_users() -> \&Vec<String>] \hfill
+    \\ returns related user vector reference
+  \item[remove\_user(userid: \&str)] \todo{should return bool, or result} \hfill
+    \\ remove a user by its userid
+  \item[get\_tax\_number() -> \&str] \hfill
+    \\ returns tax number as \&str
+  \item[set\_tax\_number(tax\_number: String)] \hfill
+    \\ set tax number
+\end{description}
+
+\newpage
+\todototoc
+\listoftodos
+
 \newpage
 \thispagestyle{empty}
 \vspace*{5cm}

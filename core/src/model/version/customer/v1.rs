@@ -114,11 +114,11 @@ impl Customer {
             created_by,
         }
     }
-    pub fn get_id(&self) -> String {
-        self.id.clone()
+    pub fn get_id(&self) -> &str {
+        &self.id
     }
-    pub fn get_name(&self) -> String {
-        self.name.to_string()
+    pub fn get_name(&self) -> &str {
+        &self.name
     }
     pub fn set_name(&mut self, name: String) {
         self.name = name;
@@ -126,14 +126,14 @@ impl Customer {
     pub fn has_user(&self) -> bool {
         self.related_users.len() > 0
     }
-    pub fn get_users(&self) -> Vec<String> {
-        self.related_users.clone()
+    pub fn get_users(&self) -> &Vec<String> {
+        &self.related_users
     }
     pub fn remove_user(&mut self, username: &str) {
         self.related_users.retain(|u| u != username);
     }
-    pub fn get_tax_number(&self) -> String {
-        self.tax_number.clone()
+    pub fn get_tax_number(&self) -> &str {
+        &self.tax_number
     }
     pub fn set_tax_number(&mut self, tax_number: String) {
         self.tax_number = tax_number;
