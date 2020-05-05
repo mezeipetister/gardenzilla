@@ -7,26 +7,20 @@
 \usepackage{todonotes}
 \usepackage{lmodern}
 \usepackage[T1]{fontenc}
+\usepackage{scrextend}
+\addtokomafont{labelinglabel}{\sffamily}
+\usepackage{blindtext}
+\usepackage{marginnote}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{subfiles}
+\usepackage{import}
+\usetikzlibrary{automata, positioning, arrows}
 \hypersetup{
     colorlinks=true,
     linktoc=all,
     linkcolor=blue,
-}
-\lstset{frame=tb,
-  language=Java,
-  aboveskip=3mm,
-  belowskip=3mm,
-  showstringspaces=false,
-  columns=flexible,
-  basicstyle={\small\ttfamily},
-  numbers=none,
-  numberstyle=\tiny\color{gray},
-  keywordstyle=\color{blue},
-  commentstyle=\color{dkgreen},
-  stringstyle=\color{mauve},
-  breaklines=true,
-  breakatwhitespace=true,
-  tabsize=3
+    urlcolor=blue,
 }
 \author{Peter Mezei}
 \title{Gardenzilla \\ development notes}
@@ -34,6 +28,7 @@
 \markright{Gardenzilla\hfill Development Notes \hfill}
 \begin{document}
 \maketitle
+\thispagestyle{empty}
 \newpage
 \thispagestyle{empty}
 \begin{figure}
@@ -53,6 +48,85 @@
 \tableofcontents
 \newpage
 \section{Introduction}
+
+\subsection{License}
+
+\marginnote{License \\GNU GPL\\ version 2}
+
+We mainly use GNU/GPL version 2. This means this is a free software,
+you can freely use it, and modify it. IMPORTANT! As GNU/GPL version 2
+is a COPYLEFT license, YOU MUST USE THE SAME GNU/GPL2 LICENSE in your
+own verion. If you modify any of the project, YOU MUST MAKE YOUR
+UPDATED VERSION AVAILABLE ONLINE. As this project is licensed under
+GNU/GPLv2, you most apply the same license and use it - or publish it
+- under the same GNU/GPLv2 licesen. If you use this project as a smaller
+part of a larger `product`
+\footnote{Software, Service, or any kind of
+  business outcome where you use this product}
+YOU MUST APPLY THE SAME GNU/GPLv2 LICENSE FOR YOUR LARGER PRODUCT AS WELL.
+
+\subsection{Technology}
+
+We use Rust as the main programming language. It is extremely powerfull,
+effective, blazangly fast and safe by design. No race condition, and
+almost impossible to create any bug that compiles. No garbage collection,
+no runtime dependencies.
+
+Other core technolgoies inside the project:
+
+\begin{labeling}{alligator}
+  \item [Gnu/Linux] \hfill \\ main development and hosting environment
+  \item [Rust] Main programming language
+  \item [GnuMakefile] \hfill \\ Using for main build and cleanup staffs
+  \item [LaTex] for documentaion
+  \item [Nginx] for webserver
+  \item [Docker] for container management
+  \item [TypeScript] \hfill \\ for typesafe javascript editing
+  \item [HTML] for web documents
+  \item [CSS] for web styles
+  \item [SASS] for better css creation
+  \item [JavaScript] \hfill \\ for client development
+  \item [Angular] as the main client library
+  \item [JSON] as the main API communication format
+\end{labeling}
+
+\subsection{3rd party libraries}
+
+There are plenty awesome 3rd party libreries that we heavily use.
+We would like to thank you for all the developers from the open-source
+community who and whose projects helped us a lot.
+In the above you can see the major 3rd party libs we use:
+
+\subsubsection{3rd party Rust libraries}
+
+\begin{labeling}{alligator}
+  \item [storaget] data object layer as DAL. In the core project we do
+    not use database, instead we use rust data objects inside
+    storaget::Pack<T> and storaget::VecPack<T>. Pack manages all the
+    data sync between memory and disk.\footnote{Storaget is our inhouse sub-project. See: \url{https://github.com/mezeipetister/storaget}}
+  \item [chrono] date library. Using to manage date and datetimes. In
+    the core project we use Date<Utc> and DateTime<Utc>. Whenever possible
+    we avoid using NaiveDate(s).
+  \item [rand] for random number generation.
+  \item [bcrypt] for HTTP auth TOKEN encryption.
+  \item [lettre] for SMTP email sending.
+  \item [nanoid] for ID generation.
+  \item [rocket] web framework for REST API.
+  \item [rocket\_cors] \hfill \\ cors management for REST API
+  \item [serde] object serialization, deserialization
+  \item [jwt] for JSON web token management
+\end{labeling}
+
+\subsection{3rd party NodeJS libraries}
+
+\begin{labeling}{alligator}
+  \item [Angular] core web framework
+  \item [chart.js] displaying charts
+  \item [ng2-chartjs] \hfill \\ chart.js -> Agnular integration
+  \item [markdown.it] \hfill \\ markdown management
+  \item [markdown] \hfill \\ markdown management
+\end{labeling}
+
 \newpage
 
 % section MODULES

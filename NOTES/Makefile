@@ -15,3 +15,4 @@ clean:
 	rm *.log
 	rm *.toc
 	rm *.out
+	rm *.tdo
