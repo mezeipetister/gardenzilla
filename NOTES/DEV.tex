@@ -137,7 +137,7 @@ In the above you can see the major 3rd party libs we use:
 % ***************
 \section{Modules}
 
-\subsection{Customers}
+\subsection{Customer}
 
 We manage customers as independent data objects, and manage a customer
 object through its implemented methods, or via public functions inside
@@ -214,7 +214,114 @@ Where:
     \\ returns tax number as \&str
   \item[set\_tax\_number(tax\_number: String)] \hfill
     \\ set tax number
-\end{description}
+  \end{description}
+
+\newpage
+
+\subsection{User}
+
+\subsection{Product}
+
+\begin{figure}[!htb]
+  \caption{Product object}
+  \begin{verbatim}
+    pub struct Product {
+      id: String,
+      name: String,
+      description: String,
+      manufacturer: String,
+      date_created: DateTime<Utc>,
+      created_by: String,
+    }
+  \end{verbatim}
+\end{figure}
+
+\begin{quote}
+  {\large \textbf{Q}uestions:}
+  \begin{itemize}
+    \item How to manage custom product data? - such as bee hazard level,
+      or product hazard category? E.g.: in sales we need to know if a
+      product requires any specific license or permission. But there can
+      be many variety per product. E.g.: `gázmesteri, I-II-III forgalmi
+      kategória növszereknél`. We also have different process per specific
+      requirements: we need the permission license number for category
+      II-I, but we need prescription for category I. We also need
+      prescription for procurement of category I product.
+    \item Best before date management? We have many products with 1-2-3
+      years of expiration date, and we have many seasonal products, so
+      if the next season start is later then the best before date, the real
+      best before date is the end of the current season.
+    \item Product related data? Such as active ingredient of a pesticide,
+      or permitted dose per crops per product.
+  \end{itemize}
+\end{quote}
+
+\subsection{Manufacturer}
+
+\begin{figure}[!htb]
+  \caption{Manufacturer object}
+  \begin{verbatim}
+    pub struct Manufacturer {
+      id: String,
+      name: String,
+      date_created: DateTime<Utc>,
+      created_by: String,
+    }
+  \end{verbatim}
+\end{figure}
+
+\newpage
+\subsection{Partner}
+
+Partner can be a source of our product, like a Wholesale or Warehouse.
+
+\begin{quote}
+  {\large \textbf{Q:}} Should
+  \todo{Decide how to manage partner and customers}
+  we manage our clients as partners as well?
+  Or manage both of them separately Partners and Customers?
+  \begin{itemize}
+    \item A partner even can purchase from us? Yes, why not \dots
+    \item A customer can be a partner? Theoretically yes.
+    \item Do we wanna see our customers in our partner list? Probably not.
+    \item Do we wanna see our partners in our customer list? Probably we don't mind.
+  \end{itemize}
+\end{quote}
+
+\begin{figure}[!htb]
+  \caption{Partner object}
+  \begin{verbatim}
+    pub struct Partner {
+      id: String,
+      name: String,
+      description: String,
+      manufacturer: String,
+      date_created: DateTime<Utc>,
+      created_by: String,
+    }
+  \end{verbatim}
+\end{figure}
+
+\subsection{Cash}
+
+\subsection{Reservation}
+
+\subsection{Stock}
+
+\subsection{Procurement}
+
+\subsection{Source}
+
+\subsection{Purchase}
+
+\subsection{Cart}
+
+\subsection{Issue}
+
+\subsection{Invoice}
+
+\subsection{Document?}
+
 
 \newpage
 \todototoc
@@ -224,6 +331,7 @@ Where:
 \thispagestyle{empty}
 \vspace*{5cm}
 \begin{center}
-  {\textit Gardenzilla\\ Development Notes \\ \vspace{5mm} All right reserved \\ Peter Mezei \\\the\year{}}
+  {\textit Gardenzilla\\ Development Notes \\ \vspace{5mm}
+    All right reserved \\ Peter Mezei \\\the\year{}}
 \end{center}
 \end{document}
