@@ -1,0 +1,66 @@
+pub struct Customer {
+    ...
+    history: HistoryObject<CustomerHistory>
+}
+
+pub enum CustomerHistory {
+    Created,
+    Removed,
+    Restored,
+    SetName {to: String},
+    SetEmail {to: String},
+    SetPhone {to: String},
+    SetTaxNumber {to: String},
+    SetAddress {to: Address},
+    RelatedUserAdded {user: String},
+    RelatedUserRemoved {user: String},
+}
+
+pub struct HistoryObject<T>(Vec<HistoryItem<T>>);
+
+impl<T> HistoryObject<T> {
+    pub fn push(&mut self, created_by: String, action: T) {
+        self.0.items.push(HistoryItem::new(created_by, action));
+    }
+}
+
+pub struct HistoryItem<T> {
+    created_by: String,
+    date_created: DateTime<Utc>,
+    action: T
+}
+
+impl<T> HistoryItem<T> {
+    pub fn new(created_by: String, action: T) -> Self {
+        HistoryItem {
+            date_created: Utc::now(),
+            created_by,
+            action
+        }
+    }
+}
+
+pub trait History<T> {
+    fn history_add(&mut self, created_by: String, action: T);
+    fn history_get_first(&self) -> HistoryItem<T>;
+    fn history_get_last(&self) -> HistroryItem<T>;
+    fn history_get_last_n(&self, n: u32) -> &[HistoryItem<T>];
+    fn history_get_all(&self) -> &Vec<HistoryItem<T>>;
+}
+
+pub mod History {
+    pub fn first<U, T>(object: &U) -> &T
+        where U: History<T>;
+}
+
+......................................................................
+
+struct History {
+    customer: Hstory<CustomerHistory>,
+}
+
+struct Db {
+    history: History
+}
+
+Db.inner().history.customer.lock()?.push(CustomerHistory::Created);

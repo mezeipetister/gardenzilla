@@ -51,7 +51,7 @@ use storaget::*;
 
 #[get("/")]
 fn index() -> String {
-    "BIT Welcome".to_owned()
+    "Gardenzilla Hello".to_owned()
 }
 
 #[derive(Debug, Serialize)]
