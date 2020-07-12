@@ -14,7 +14,7 @@ pub struct Upl {
     sku: SKU,
     procurement_id: u32,        // todo: maybe ProcurementId?
     net_procurement_price: f32, // todo: sure?
-    best_before: NaiveDate,     // todo: DateTime<Utc>?
+    best_before: DateTime<Utc>, // todo: DateTime<Utc> or NaiveDate?
     is_divisible: bool,         // todo: Manage this here?
     quantity: f32,              // unit is the same as the SKU's
     location: UplLocation,      //
@@ -31,7 +31,9 @@ pub struct UplStore {
 }
 
 pub trait UplManager {
-    fn move_in(&mut self, upl_needle: UplNeedle);
+    fn move_in(&mut self, upl_needle: UplNeedle) -> &Upl {
+        unimplemented!()
+    }
     fn move_out(&mut self) -> UplNeedle {
         unimplemented!()
     }
@@ -50,7 +52,31 @@ impl UplStore {
     }
 }
 
+pub struct User();
+pub struct Customer();
+
 pub struct Product {
     sku: SKU,
     name: String,
+}
+
+pub struct Cart {
+    id: u32,
+    customer: Customer,
+    items: HashMap<SKU, CartItem>,
+    total_net_price: f32,
+    total_vat: f32,
+    total_gross_price: f32,
+    created_by: User,
+    created_at: DateTime<Utc>,
+    is_closed: bool,
+}
+
+pub struct CartItem {
+    sku: SKU,
+    piece: f32,
+    net_unit_price: f32,
+    vat: f32,
+    gross_unit_price: f32,
+    upls: Vec<Upl>,
 }
