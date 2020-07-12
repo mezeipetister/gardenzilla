@@ -1,0 +1,28 @@
+\documentclass{article}
+\usepackage{listings}
+\begin{document}
+\subsection{Gift Card}
+
+\begin{lstlisting}[caption='GiftCard Object']
+  pub struct GiftCard {
+    id: String,
+    owner: CustomerId,
+    balance: u32,
+    history: Vec<Transaction>
+  }
+
+  pub struct Transaction {
+    id: i32,
+    amount: i32,
+    reference: Reference,
+    date_created: DateTime<Utc>,
+    created_by: UserId,
+  }
+
+  pub enum Reference {
+    Purchase(PurchaseId),
+    MoneyIn(CashId),
+    MoneyBack(CashId)
+  }
+\end{lstlisting}
+\end{document}

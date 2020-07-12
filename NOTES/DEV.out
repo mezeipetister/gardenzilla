@@ -1,0 +1,26 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{License}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Technology}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{3rd party libraries}{section.1}% 4
+\BOOKMARK [3][-]{subsubsection.1.3.1}{3rd party Rust libraries}{subsection.1.3}% 5
+\BOOKMARK [3][-]{subsubsection.1.3.2}{3rd party NodeJS libraries}{subsection.1.3}% 6
+\BOOKMARK [1][-]{section.2}{Modules}{}% 7
+\BOOKMARK [2][-]{subsection.2.1}{Customer}{section.2}% 8
+\BOOKMARK [3][-]{subsubsection.2.1.1}{Methods}{subsection.2.1}% 9
+\BOOKMARK [2][-]{subsection.2.2}{User}{section.2}% 10
+\BOOKMARK [2][-]{subsection.2.3}{Product}{section.2}% 11
+\BOOKMARK [2][-]{subsection.2.4}{Manufacturer}{section.2}% 12
+\BOOKMARK [2][-]{subsection.2.5}{Partner}{section.2}% 13
+\BOOKMARK [2][-]{subsection.2.6}{Cash}{section.2}% 14
+\BOOKMARK [2][-]{subsection.2.7}{Reservation}{section.2}% 15
+\BOOKMARK [2][-]{subsection.2.8}{Stock}{section.2}% 16
+\BOOKMARK [2][-]{subsection.2.9}{Procurement}{section.2}% 17
+\BOOKMARK [2][-]{subsection.2.10}{Source}{section.2}% 18
+\BOOKMARK [2][-]{subsection.2.11}{Purchase}{section.2}% 19
+\BOOKMARK [2][-]{subsection.2.12}{Cart}{section.2}% 20
+\BOOKMARK [2][-]{subsection.2.13}{Issue}{section.2}% 21
+\BOOKMARK [2][-]{subsection.2.14}{Invoice}{section.2}% 22
+\BOOKMARK [2][-]{subsection.2.15}{Document?}{section.2}% 23
+\BOOKMARK [2][-]{subsection.2.16}{Customer Card}{section.2}% 24
+\BOOKMARK [2][-]{subsection.2.17}{Gift Card}{section.2}% 25
+\BOOKMARK [1][-]{lstnumber.3.20}{Todo list}{}% 26

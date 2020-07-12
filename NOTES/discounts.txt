@@ -1,0 +1,41 @@
+Discount types
+
+  Product
+    - discount campaign member (only 1 member)
+        |      ~~~~~~~~
+        |
+        *-----> Campaign
+              | with n product items with /the same discount?/
+              |                      with /different discount?/
+             \ /
+              *
+              CampaignMember(CampaignId, Percentage)
+  User
+    - fix percentage discount or loyalty member
+      ~~~~~~~~~~~~~~             ~~~~~~~~~~~~~~
+      
+    - what about the products with discounts?
+      |
+      |
+     \ /
+      *
+      discount: Discount
+      
+      pub enum Discount {
+        FixPercentage(u32),
+        CustomerCard(CardId)
+      }
+    
+  Cart
+    - Custom discount
+      ~~~~~~~~~~~~~~~
+      Ability to give custom discount during the sales process
+    
+  Other
+    - Shipping discount
+      ~~~~~~~~~~~~~~~~~
+      
+Would be good to know
+  - Per product real profit
+  - Per cart real profit
+  - Minimal price per product

@@ -1,0 +1,32 @@
+Gardenzilla  
+Minimális IT fejlesztés
+-----------------------
+- 2 számítógép a két vezetőnek
+  - Ultrabook gyári linux teljes támogatással,
+    könnyű és hosszú akksi idő. Dell XPS 13.
+  - Mini PC nagy monitorral.
+- Linux teljes áttérés
+  - Google Gsuite*
+  - LibreOffice
+  - SSH*
+  - Firefox / Chrome*
+  - Web appok főként*
+  - Gedit
+- Telefonokat most hanyagoljuk, mobile first but work first!
+- 1 szerver
+  - linux op
+  - virtuális szerverek
+    - kamera rendszer áttérés
+    - szükséges VM-ek, pl Windows gép a bolti klienseknek ha szükséges
+- Hálózat fejlesztés
+  - Bolt Mikrotik AP
+    |
+    *-> Hűtőház vezérelt bolti AP
+  - Gardenzilla VPN
+  - FIX IP hűtőház
+  - Belső DNS kezelés
+  - Vendég és céges wifi kialakítása
+  - Alhálózatok kialakítása
+- Biztonsági fejlesztés
+  - Új kamera rendszer a boltba,
+    a központi rendszerre kötve

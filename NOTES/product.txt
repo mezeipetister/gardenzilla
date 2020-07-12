@@ -1,0 +1,50 @@
+Product
+  - Badges
+  - Product details
+  - Related information
+  
+Print
+  - How to manage prints? A few area where we need to print:
+    - invoice,
+    - delivery note,
+    - product stocking,
+    - money receipt - in, out
+    - inventory notes,
+    - 
+    
+Gift Card
+  - A számvitele, illetve a számlázás a kérdéses.
+    A befizetést hova könyveljük? A számlán a bruttó ár
+    minusz a felhasznált kedvezmény mértéke szerepel majd?
+    
+Számlázás
+  - Papír alapú számlázás
+  - NAV integráció
+  - Szigorú számadás
+  
+Source
+  struct Source {
+    id: String,
+    products: Vec<PSource>
+  }
+  
+  struct SProduct {
+    sku: String,
+    price: u32,
+    history: Vec<SHitem>
+  }
+  
+  struct SHitem {
+    price: Price,
+    created_by: String,
+    date_created: DateTime<Utc>
+  }
+  
+  enum Price {
+    PriceList(u32),
+    Invoice(u32),
+    ColdCall(u32),
+    ...
+  }
+  
+

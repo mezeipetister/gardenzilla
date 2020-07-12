@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage{standalone}
 \usepackage{hyperref}
 \usepackage{datetime}
 \usepackage{graphicx}
@@ -9,13 +10,10 @@
 \usepackage[T1]{fontenc}
 \usepackage{scrextend}
 \addtokomafont{labelinglabel}{\sffamily}
-\usepackage{blindtext}
+\usepackage{blindtext} 
 \usepackage{marginnote}
 \usepackage{hyperref}
-\usepackage{tikz}
-\usepackage{subfiles}
-\usepackage{import}
-\usetikzlibrary{automata, positioning, arrows}
+\usepackage{smartdiagram}
 \hypersetup{
     colorlinks=true,
     linktoc=all,
@@ -105,12 +103,12 @@ In the above you can see the major 3rd party libs we use:
 
 \begin{labeling}{alligator}
   \item [storaget] data object layer as DAL. In the core project we do
-    not use database, instead we use rust data objects inside
-    storaget::Pack<T> and storaget::VecPack<T>. Pack manages all the
-    data sync between memory and disk.\footnote{Storaget is our inhouse sub-project. See: \url{https://github.com/mezeipetister/storaget}}
+  not use database, instead we use rust data objects inside
+  storaget::Pack<T> and storaget::VecPack<T>. Pack manages all the
+  data sync between memory and disk.\footnote{Storaget is our inhouse sub-project. See: \url{https://github.com/mezeipetister/storaget}}
   \item [chrono] date library. Using to manage date and datetimes. In
-    the core project we use Date<Utc> and DateTime<Utc>. Whenever possible
-    we avoid using NaiveDate(s).
+  the core project we use Date<Utc> and DateTime<Utc>. Whenever possible
+  we avoid using NaiveDate(s).
   \item [rand] for random number generation.
   \item [bcrypt] for HTTP auth TOKEN encryption.
   \item [lettre] for SMTP email sending.
@@ -138,6 +136,7 @@ In the above you can see the major 3rd party libs we use:
 \section{Modules}
 
 \subsection{Customer}
+\label{customer}
 
 We manage customers as independent data objects, and manage a customer
 object through its implemented methods, or via public functions inside
@@ -164,61 +163,117 @@ Where:
 
 \begin{description}
   \item[id] \hfill
-    \\ Customer unique identifier \todo {Describe and set the way we manage IDs.}
+        \\ Customer unique identifier \todo {Describe and set the way we manage IDs.}
   \item[related\_users] \hfill
-    \\ vector of related user ID. User and Customer objects are independent
-    of each other, as we can have customer without a user, and we can have
-    - at least in theory - a user without a customer. Customer can
-    purchase, User can login and interact withing the client. To manage
-    Customer <-> User relations, we store them as a related ID list in
-    each other. Here in a Customer object thats why we have this
-    related\_users vector.
+        \\ vector of related user ID. User and Customer objects are independent
+        of each other, as we can have customer without a user, and we can have
+        - at least in theory - a user without a customer. Customer can
+        purchase, User can login and interact withing the client. To manage
+        Customer <-> User relations, we store them as a related ID list in
+        each other. Here in a Customer object thats why we have this
+        related\_users vector.
 
   \item[name] \hfill
-    \\ name as string of the customer
+        \\ name as string of the customer
 
   \item[tax\_number] \hfill
-    \\ tax number as string
+        \\ tax number as string
   \item[address] \hfill
-    \\ address as InvoiceAddress object \todo{display InoviceAddress}
+        \\ address as InvoiceAddress object \todo{display InoviceAddress}
   \item[phone] \hfill
-    \\ phone number as string
+        \\ phone number as string
   \item[email] \hfill
-    \\ email as string
+        \\ email as string
   \item[date\_created] \hfill
-    \\ date as chrono::DateTime<Utc>
+        \\ date as chrono::DateTime<Utc>
   \item[created\_by] \hfill
-    \\ userid as string, who created this object \todo{describe datecreated
-      and created by somewhere as we use them everywhere}
+        \\ userid as string, who created this object \todo{describe datecreated
+          and created by somewhere as we use them everywhere}
 \end{description}
 
 \subsubsection{Methods}
 
 \begin{description}
   \item[new(\dots) -> Self] \hfill
-    \\ creates a new instance of Customer. ID cannot be changed after
-    creation
+        \\ creates a new instance of Customer. ID cannot be changed after
+        creation
   \item[get\_id() -> \&str] \hfill
-    \\ returns customer id as \&str
+        \\ returns customer id as \&str
   \item[get\_name() -> \&str] \hfill
-    \\ returns customer name as \&str
+        \\ returns customer name as \&str
   \item[set\_name(name: String)] \hfill
-    \\ set customer name to the given new one
+        \\ set customer name to the given new one
   \item[has\_user() -> bool] \hfill
-    \\ returns bool if there is at least one related user
+        \\ returns bool if there is at least one related user
   \item[get\_users() -> \&Vec<String>] \hfill
-    \\ returns related user vector reference
+        \\ returns related user vector reference
   \item[remove\_user(userid: \&str)] \todo{should return bool, or result} \hfill
-    \\ remove a user by its userid
+        \\ remove a user by its userid
   \item[get\_tax\_number() -> \&str] \hfill
-    \\ returns tax number as \&str
+        \\ returns tax number as \&str
   \item[set\_tax\_number(tax\_number: String)] \hfill
-    \\ set tax number
-  \end{description}
+        \\ set tax number
+\end{description}
 
 \newpage
 
 \subsection{User}
+
+At this first version, we have users only as admin users. As the online store
+is not available, we do not need role management. All the registered users are
+allowed to login.
+
+Customers are also the part of the system, as the core object of the purchase process.
+Currently all the purchase and invoice staff are related to customers. See at \ref{customer}.
+
+\begin{figure}[!htb]
+  \caption{User object}
+  \begin{verbatim}
+    pub struct User {
+      id: String,                       // String, u32 or UserId?
+      related_customers: Vec<String>,   // String, u32 or CustomerId?
+      email: String,
+      password_hash: String,            // Should we use PasswordHash instead?
+      date_created: DateTime<Utc>,
+      created_by: String,
+    }
+  \end{verbatim}
+\end{figure}
+
+Like:
+
+\begin{verbatim}
+  struct UserId(String);
+  
+  impl UserId {
+    fn from(user_store: VecPack<User>, userid: &str) -> Self;
+  }
+\end{verbatim}
+
+\begin{tabular}{|p{10cm}}
+  \textbf{Fontos}
+  Meg kell oldani, hogy a user-ben tárolt customerek és a customerben tárolt userek
+  szinkronban legyenek egymással. Erre megoldás lehet, ha csak úgy engedünk hozzá adni,
+  vagy elvenni egyikből-másikból, hogy paraméternek beadjuk a párt. Így az algoritmus felelhet
+  azért, hogy a két entitás szinkronban legyen.
+
+  Tehát
+\end{tabular}
+
+\begin{verbatim}
+  let mut user = User::new();
+  let mut customer = Customer::new();
+
+  user.add_customer(&mut customer);
+    |
+    *---->  this should add the customer to the user as related user
+            and also add user as related user to the given customer.
+
+  user.remove_customer(&mut customer);
+    |
+    *---->  this should remove the related customer and also clean the current user
+            from the given customer as well.
+\end{verbatim}
 
 \subsection{Product}
 
@@ -240,19 +295,19 @@ Where:
   {\large \textbf{Q}uestions:}
   \begin{itemize}
     \item How to manage custom product data? - such as bee hazard level,
-      or product hazard category? E.g.: in sales we need to know if a
-      product requires any specific license or permission. But there can
-      be many variety per product. E.g.: `gázmesteri, I-II-III forgalmi
-      kategória növszereknél`. We also have different process per specific
-      requirements: we need the permission license number for category
-      II-I, but we need prescription for category I. We also need
-      prescription for procurement of category I product.
+          or product hazard category? E.g.: in sales we need to know if a
+          product requires any specific license or permission. But there can
+          be many variety per product. E.g.: `gázmesteri, I-II-III forgalmi
+          kategória növszereknél`. We also have different process per specific
+          requirements: we need the permission license number for category
+          II-I, but we need prescription for category I. We also need
+          prescription for procurement of category I product.
     \item Best before date management? We have many products with 1-2-3
-      years of expiration date, and we have many seasonal products, so
-      if the next season start is later then the best before date, the real
-      best before date is the end of the current season.
+          years of expiration date, and we have many seasonal products, so
+          if the next season start is later then the best before date, the real
+          best before date is the end of the current season.
     \item Product related data? Such as active ingredient of a pesticide,
-      or permitted dose per crops per product.
+          or permitted dose per crops per product.
   \end{itemize}
 \end{quote}
 
@@ -302,15 +357,122 @@ Partner can be a source of our product, like a Wholesale or Warehouse.
   \end{verbatim}
 \end{figure}
 
+\newpage
+
 \subsection{Cash}
+
+\begin{verbatim}
+    pub struct CashRegister {
+      balance: i32,
+      transaction: Vec<Transaction>
+    }
+  \end{verbatim}
+
+\begin{verbatim}
+    pub struct Transaction {
+      id: String,
+      name: String,
+      amount: i32,
+      kind: TransactionKind
+      created_by: String,
+      date_created: DateTime<Utc>,
+    }
+  \end{verbatim}
+
+\begin{verbatim}
+    pub enum TransactionKind {
+      MoneyIn {
+        who: String,
+        amount: i32,
+        comment: String,
+      },
+      MoneyOut {
+        who: String,
+        amount: i32,
+        comment: String,
+      },
+      Purchase {
+        purchase_id: String,
+      },
+      Change {
+        comment: String,
+      },
+    }
+  \end{verbatim}
 
 \subsection{Reservation}
 
 \subsection{Stock}
 
+\begin{verbatim}
+  pub struct Stock {
+    id: String,
+    products: Vec<StockItem>
+  }
+
+  pub struct StocSku {
+    sku: String,
+    items: Vec<StockItem>
+  }
+
+  pub struct StockItem {
+    upid: String,
+  }
+\end{verbatim}
+
+We\todo{Unique Product Layer (UPL?)} should use a spacial product layer, to hold all the unique product
+as a single product holder, with alll of its data and history; - and store
+this product holder inside the stock product vector.
+
+\begin{quote}
+  Questions:
+  \begin{itemize}
+    \item It should be really fast to check a UPL by ID.
+    \item It should be easy to locate where the UPLs are located.
+          And their movements.
+    \item We should hold the minimum required data,
+          and manage memory smartly - as we must estimate a large number of
+          UPL objects.
+  \end{itemize}
+\end{quote}
+
 \subsection{Procurement}
 
+\begin{lstlisting}[caption='Procurement Object']
+  pub struct Procurement {
+    
+  }
+\end{lstlisting}
+
+\begin{quote}
+  Questions:
+  \begin{itemize}
+    \item It should be really fast to check a UPL by ID.
+    \item It should be easy to locate where the UPLs are located.
+          And their movements.
+    \item We should hold the minimum required data,
+          and manage memory smartly - as we must estimate a large number of
+          UPL objects.
+  \end{itemize}
+\end{quote}
+
 \subsection{Source}
+
+\begin{lstlisting}[caption='Source Object']
+  type Sku = String;
+  
+  pub struct Source {
+    id: String,
+    name: String,
+    items: HashMap<Sku, ItemHistory>
+  }
+
+  pub struct ItemHistory {
+    price: i32,
+    created_by: String
+    date_created: DateTime<Utc>,
+  }
+\end{lstlisting}
 
 \subsection{Purchase}
 
@@ -320,8 +482,39 @@ Partner can be a source of our product, like a Wholesale or Warehouse.
 
 \subsection{Invoice}
 
+
 \subsection{Document?}
 
+\subsection{Customer Card}
+
+\begin{lstlisting}
+  pub struct CustomerCard {
+    id: String,
+    owner: CustomerId,
+    discount_pct: u32,
+    date_created: DateTime<Utc>,
+    created_by: UserId
+  }
+\end{lstlisting}
+
+Kérdések
+
+\begin{enumerate}
+  \item ez minden customer-nek jár?
+  \item egy customernek csak egy lehet?
+  \item ez a customer profil része, vagy külön modul?
+  \item lehet ezt a kártyát cserélni?
+  \item online vásárlásnál automatikusan megy rá?
+  \item offline vásárlásnál kell a fizikai kártya?
+  \item history legyen benne? Vagy a CustomerId alapján kereshető?
+  \item Mi a célja? Elköteleződés, illetve az offline beazonosítás.
+\end{enumerate}
+
+\include{chapter/giftcard}
+
+Hello \makebox[5cm]{\dotfill} you are welcomed. Me as \makebox[5cm]{\dotfill} aggrees that \dots
+
+\input{chart}
 
 \newpage
 \todototoc
