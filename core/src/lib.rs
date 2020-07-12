@@ -31,6 +31,7 @@ pub mod folder;
 pub mod id;
 pub mod login;
 pub mod model;
+pub mod new;
 pub mod password;
 pub mod prelude;
 pub mod user;
