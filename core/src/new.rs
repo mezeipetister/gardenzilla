@@ -1,7 +1,29 @@
 use chrono::prelude::*;
 use std::collections::HashMap;
 
-type SKU = String;
+/*
+   Backlog
+       - Product
+       - Unit
+       - User
+       - Customer
+       - UPL Store
+       - UPL Needle mechanism + traits
+       - UPL movement traits + methods
+       - Stock
+       - Cart
+       - Purchase process
+       - Invoice
+       - PettyCash
+       - Source
+       - Procurement
+       - Delivery
+       - ..
+       - Order
+       - Reservation
+*/
+
+pub type SKU = String;
 
 enum UplLocation {
     Cart(u32),
@@ -54,11 +76,6 @@ impl UplStore {
 
 pub struct User();
 pub struct Customer();
-
-pub struct Product {
-    sku: SKU,
-    name: String,
-}
 
 pub struct Cart {
     id: u32,
