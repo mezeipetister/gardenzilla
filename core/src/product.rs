@@ -1,4 +1,5 @@
 use crate::new::*;
+use crate::unit::*;
 use chrono::prelude::*;
 
 /*
@@ -35,7 +36,7 @@ pub struct Product {
     sku: SKU,
     name: String,
     quantity: f32,
-    unit: String, // todo: how to handle unit globally?
+    unit: Unit,
     created_by: User,
     created_at: DateTime<Utc>,
 }

@@ -1,8 +1,8 @@
-pub enum _Unit {
+pub enum Unit {
     // Single
     Single,
     // Length
-    Milimeter,
+    Millimeter,
     Centimeter,
     Meter,
     Kilometer,
@@ -18,36 +18,57 @@ pub enum _Unit {
     Hectoliter,
 }
 
-pub struct Unit(String);
-
 impl Unit {
-    pub fn new(name: &str) -> Result<Self, String> {
-        let name = name.trim().to_string();
-        if name.chars().all(|c: char| c.is_alphabetic()) {
-            return Ok(Unit(name));
+    pub fn is_liquid(&self) -> bool {
+        match &self {
+            Unit::Milliliter | Unit::Deciliter | Unit::Liter | Unit::Hectoliter => true,
+            _ => false,
         }
-        Err(format!("Unit name must contains only alphanumeric"))
+    }
+    pub fn is_solid(&self) -> bool {
+        match &self {
+            Unit::Milligram | Unit::Gram | Unit::Dekagram | Unit::Kilogram => true,
+            _ => false,
+        }
+    }
+    pub fn is_length(&self) -> bool {
+        match &self {
+            Unit::Millimeter | Unit::Centimeter | Unit::Meter | Unit::Kilometer => true,
+            _ => false,
+        }
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    #[test]
-    fn test_unit_new() {
-        assert_eq!(Unit::new("mm").is_ok(), true);
-        assert_eq!(Unit::new(" mm").is_ok(), true);
-        assert_eq!(Unit::new(" mm ").is_ok(), true);
-        assert_eq!(Unit::new("mm").is_ok(), true);
-        assert_eq!(Unit::new("1kg").is_ok(), false);
-        assert_eq!(Unit::new("m m").is_ok(), false);
-        assert_eq!(Unit::new("kg").is_ok(), true);
-        assert_eq!(Unit::new("l").is_ok(), true);
-        assert_eq!(Unit::new("litre").is_ok(), true);
-        assert_eq!(Unit::new("liter").is_ok(), true);
-        assert_eq!(Unit::new("méter").is_ok(), true);
-        assert_eq!(Unit::new("m").is_ok(), true);
-        assert_eq!(Unit::new("g").is_ok(), true);
-        assert_eq!(Unit::new("db").is_ok(), true);
-    }
-}
+// pub struct Unit(String);
+
+// impl Unit {
+//     pub fn new(name: &str) -> Result<Self, String> {
+//         let name = name.trim().to_string();
+//         if name.chars().all(|c: char| c.is_alphabetic()) {
+//             return Ok(Unit(name));
+//         }
+//         Err(format!("Unit name must contains only alphanumeric"))
+//     }
+// }
+
+// #[cfg(test)]
+// mod tests {
+//     use super::*;
+//     #[test]
+//     fn test_unit_new() {
+//         assert_eq!(Unit::new("mm").is_ok(), true);
+//         assert_eq!(Unit::new(" mm").is_ok(), true);
+//         assert_eq!(Unit::new(" mm ").is_ok(), true);
+//         assert_eq!(Unit::new("mm").is_ok(), true);
+//         assert_eq!(Unit::new("1kg").is_ok(), false);
+//         assert_eq!(Unit::new("m m").is_ok(), false);
+//         assert_eq!(Unit::new("kg").is_ok(), true);
+//         assert_eq!(Unit::new("l").is_ok(), true);
+//         assert_eq!(Unit::new("litre").is_ok(), true);
+//         assert_eq!(Unit::new("liter").is_ok(), true);
+//         assert_eq!(Unit::new("méter").is_ok(), true);
+//         assert_eq!(Unit::new("m").is_ok(), true);
+//         assert_eq!(Unit::new("g").is_ok(), true);
+//         assert_eq!(Unit::new("db").is_ok(), true);
+//     }
+// }
