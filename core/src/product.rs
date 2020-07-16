@@ -32,11 +32,3 @@ use chrono::prelude::*;
 //     created_by: "demouser",
 //     created_at: "2020-07-13 10:06:01T"
 // }
-pub struct Product {
-    sku: SKU,
-    name: String,
-    quantity: f32,
-    unit: Unit,
-    created_by: User,
-    created_at: DateTime<Utc>,
-}

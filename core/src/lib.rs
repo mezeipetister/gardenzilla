@@ -36,6 +36,7 @@ pub mod password;
 pub mod prelude;
 pub mod product;
 pub mod unit;
+pub mod upl;
 pub mod user;
 
 pub use check::*;

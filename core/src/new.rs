@@ -1,3 +1,4 @@
+use crate::prelude::*;
 use chrono::prelude::*;
 use std::collections::HashMap;
 
@@ -24,23 +25,63 @@ use std::collections::HashMap;
 */
 
 pub type SKU = String;
+pub type CartId = u32;
+pub type StockId = u32;
+pub type DeliveryId = u32;
+pub type UplId = u32;
+pub type ProcurementId = u32;
+
+pub enum Unit {
+    Piece,
+    Millimeter,
+    Gram,
+    Milliliter,
+}
+
+impl Unit {
+    pub fn from_str(from: &str) -> AppResult<Unit> {
+        let res = match from {
+            "piece" => Unit::Piece,
+            "millimeter" => Unit::Milliliter,
+            "gram" => Unit::Gram,
+            "milliliter" => Unit::Milliliter,
+            _ => return Err(Error::BadRequest(format!("Wrong unit format: {}", from))),
+        };
+        Ok(res)
+    }
+}
+
+pub struct Product {
+    sku: SKU,
+    name: String,
+    quantity: u32, // 250
+    unit: Unit,    // ml
+    created_by: User,
+    created_at: DateTime<Utc>,
+}
 
 enum UplLocation {
-    Cart(u32),
-    Stock(u32),
-    Delivery(u32),
+    Cart(CartId),
+    Stock(StockId),
+    Delivery(DeliveryId),
 }
 
 pub struct Upl {
-    id: u32,
+    id: UplId,
     sku: SKU,
-    procurement_id: u32,        // todo: maybe ProcurementId?
-    net_procurement_price: f32, // todo: sure?
-    best_before: DateTime<Utc>, // todo: DateTime<Utc> or NaiveDate?
-    is_divisible: bool,         // todo: Manage this here?
-    quantity: f32,              // unit is the same as the SKU's
-    location: UplLocation,      //
-    history: Vec<UplLocation>,  // todo: + DateTime per event. Only location change?
+    procurement_id: ProcurementId,      // todo: maybe ProcurementId?
+    net_procurement_price: f32,         // todo: sure?
+    best_before: Option<DateTime<Utc>>, // todo: DateTime<Utc> or NaiveDate?
+    quantity: u32,                      // unit is the same as the SKU's
+    is_opened: bool,
+    location: UplLocation,        //
+    history: Vec<UplHistoryItem>, // todo: + DateTime per event. Only location change?
+}
+
+pub struct UplHistoryItem {
+    created_at: DateTime<Utc>,
+    created_by: User,
+    location: UplLocation,
 }
 
 pub struct UplNeedle {
@@ -49,7 +90,7 @@ pub struct UplNeedle {
 }
 
 pub struct UplStore {
-    upls: HashMap<u32, Upl>, // todo: maybe UplId instead of u32?
+    upls: HashMap<UplId, Upl>, // todo: somehow partitioning?
 }
 
 pub trait UplManager {
@@ -62,10 +103,10 @@ pub trait UplManager {
 }
 
 impl UplStore {
-    pub fn find_upl(&self, upl_id: u32) -> Result<&Upl, String> {
+    pub fn find_upl(&self, upl_id: u32) -> AppResult<&Upl> {
         unimplemented!("Not implemented!")
     }
-    pub fn move_upl<F, T>(&mut self, from: F, to: T) -> Result<(), String>
+    pub fn move_upl<F, T>(&mut self, from: &mut F, to: &mut T) -> AppResult<()>
     where
         F: UplManager,
         T: UplManager,
@@ -95,5 +136,5 @@ pub struct CartItem {
     net_unit_price: f32,
     vat: f32,
     gross_unit_price: f32,
-    upls: Vec<Upl>,
+    upls: Vec<UplNeedle>,
 }
