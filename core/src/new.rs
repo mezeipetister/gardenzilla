@@ -42,6 +42,17 @@ pub enum Unit {
     Milliliter,
 }
 
+impl std::fmt::Display for Unit {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match &self {
+            Unit::Piece => write!(f, "db"),
+            Unit::Milliliter => write!(f, "ml"),
+            Unit::Gram => write!(f, "g"),
+            Unit::Millimeter => write!(f, "mm"),
+        }
+    }
+}
+
 pub enum Quantity {
     Simple(u32),
     Complex(u32, u32),
@@ -78,6 +89,14 @@ pub struct Product {
     vat_percentage: u32, // e.g.: 27 => 27%, 0 | 5 | 18 | 27 based on the Hungarian tax law 2020
     created_by: UserId,
     created_at: DateTime<Utc>,
+}
+
+impl std::fmt::Display for Product {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match &self.unit {
+            _ => write!(f, "{} {} {}", self.name, self.quantity, self.unit),
+        }
+    }
 }
 
 enum UplLocation {
