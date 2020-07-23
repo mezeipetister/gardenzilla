@@ -85,8 +85,8 @@ pub struct Product {
     name: String,
     quantity: Quantity, // e.g.: Simple(u32) => 3 ml, or Complex(u32, u32) => 5x3 ml
     unit: Unit,         // e.g.: ml
-    net_retail_price: f32, // e.g.: 1000 HUF
-    vat_percentage: u32, // e.g.: 27 => 27%, 0 | 5 | 18 | 27 based on the Hungarian tax law 2020
+    net_retail_price: Option<f32>, // e.g.: 1000 HUF
+    vat_percentage: Option<u32>, // e.g.: 27 => 27%, 0 | 5 | 18 | 27 based on the Hungarian tax law 2020
     created_by: UserId,
     created_at: DateTime<Utc>,
 }
@@ -109,8 +109,10 @@ enum UplLocation {
 pub struct Upl {
     id: UplId,
     sku: SKU,
-    procurement_id: ProcurementId,      // todo: maybe ProcurementId?
-    net_procurement_price: f32,         // todo: sure?
+    procurement_id: ProcurementId, // todo: maybe ProcurementId?
+    net_procurement_price: f32,    // todo: sure?
+    net_retail_price_original: Option<f32>,
+    net_retail_price: Option<f32>,
     best_before: Option<DateTime<Utc>>, // todo: DateTime<Utc> or NaiveDate?
     quantity: Quantity, // todo: Should update all the times, when the SKU quantity updated
     unit: Unit,         // todo: Should be update all the times, when the SKU unit updated
@@ -162,6 +164,55 @@ pub struct Stock {
     items: HashMap<SKU, Vec<UplPhdr>>,
 }
 
+pub struct Source {
+    id: SourceId,
+    name: String,
+    items: HashMap<SKU, Vec<SourceItem>>,
+}
+
+pub struct SourceItem {
+    net_wholesale_price: f32,
+    kind: SourceKind,
+    comment: Option<String>,
+    created_by: UserId,
+    created_at: DateTime<Utc>,
+}
+
+pub enum SourceKind {
+    PriceList,
+    Call,
+    Procurement(ProcurementId),
+}
+
+pub struct PriceLog {
+    sku: SKU,
+    price_history: Vec<PriceLogHistoryItem>,
+}
+
+pub struct PriceLogHistoryItem {
+    net_retail_price: f32,
+    created_by: UserId,
+    created_at: DateTime<Utc>,
+}
+
+pub struct Procurement {
+    id: ProcurementId,
+    description: String,
+    source: SourceId,
+    items: Vec<ProcurementItem>,
+    expected_net_total: f32,
+    created_by: UserId,
+    created_at: DateTime<Utc>,
+}
+
+pub struct ProcurementItem {
+    sku: SKU,
+    quantity: u32,
+    expected_net_unit_price: f32,
+    description: String,
+    upls: Vec<UplPhdr>,
+}
+
 pub struct Cart {
     id: u32,
     customer: CustomerId,
@@ -203,27 +254,4 @@ pub enum DocumentKind {
 pub struct Invoice {
     id: String,
     customer: String,
-}
-
-pub struct Source {
-    id: SourceId,
-    name: String,
-    items: HashMap<SKU, Vec<SourceItemHistory>>,
-}
-
-pub struct Procurement {
-    id: ProcurementId,
-    description: String,
-    source: SourceId,
-    items: Vec<ProcurementItem>,
-    expected_net_total: f32,
-    created_by: UserId,
-    created_at: DateTime<Utc>,
-}
-
-pub struct ProcurementItem {
-    sku: SKU,
-    quantity: u32,
-    expected_net_unit_price: f32,
-    description: String,
 }
