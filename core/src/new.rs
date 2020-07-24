@@ -111,8 +111,8 @@ pub struct Upl {
     sku: SKU,
     procurement_id: ProcurementId, // todo: maybe ProcurementId?
     net_procurement_price: f32,    // todo: sure?
-    net_retail_price_original: Option<f32>,
-    net_retail_price: Option<f32>,
+    net_retail_price_list: Option<f32>,
+    net_retail_price: Option<f32>,      // todo: price change history?
     best_before: Option<DateTime<Utc>>, // todo: DateTime<Utc> or NaiveDate?
     quantity: Quantity, // todo: Should update all the times, when the SKU quantity updated
     unit: Unit,         // todo: Should be update all the times, when the SKU unit updated
@@ -191,8 +191,16 @@ pub struct PriceLog {
 
 pub struct PriceLogHistoryItem {
     net_retail_price: f32,
+    ppp_expected: (), // Profit Per Product
+    ppp_pct_expected: (),
+    reason: PriceLogReason,
     created_by: UserId,
     created_at: DateTime<Utc>,
+}
+
+pub enum PriceLogReason {
+    Procurement(ProcurementId),
+    Custom,
 }
 
 pub struct Procurement {
