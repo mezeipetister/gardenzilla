@@ -135,7 +135,7 @@ mod tests {
             String::from("66064590-2-35")
         );
         assert_eq!(
-            format!("{}", TaxNumber::new("55405625-1-33").unwrap()),
+            format!("{}", TaxNumber::new(" 55405625 asd - 1 - 33 ").unwrap()),
             String::from("55405625-1-33")
         );
     }
