@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use crate::taxnumber::*;
 use chrono::prelude::*;
 use std::collections::HashMap;
 
@@ -223,7 +224,7 @@ pub struct ProcurementItem {
 
 pub struct Cart {
     id: CartId,
-    customer: CustomerId,
+    customer: Option<CustomerId>,
     payment_kind: PaymentKind,
     // delivery: (),
     document_kind: DocumentKind,
@@ -235,10 +236,28 @@ pub struct Cart {
     created_at: DateTime<Utc>,
 }
 
-pub struct InvoiceHeader {
-    name: String,
-    address: String,
-    tax_number: u32,
+pub struct CartItem {
+    sku: SKU,
+    piece: u32,
+    net_unit_price: f32,
+    vat: f32,
+    gross_unit_price: f32,
+    upls: Vec<UplPhdr>,
+    has_custom_priced: bool,
+}
+
+pub struct InvoiceData {
+    customer_name: String,
+    customer_address: Address,
+    email: String,
+    tax_number: TaxNumber,
+    license_number: Option<String>,
+}
+
+pub struct Address {
+    zip: u32,
+    city: String,
+    street: String,
 }
 
 pub enum PaymentKind {
@@ -249,21 +268,12 @@ pub enum PaymentKind {
 
 pub enum DocumentKind {
     Receipt,
-    Invoice,
+    Invoice(InvoiceData),
 }
 
 pub enum DeliveryKind {
     OnSite, // todo: location?
     Delivery,
-}
-
-pub struct CartItem {
-    sku: SKU,
-    piece: u32,
-    net_unit_price: f32,
-    vat: f32,
-    gross_unit_price: f32,
-    upls: Vec<UplPhdr>,
 }
 
 pub struct Purchase {

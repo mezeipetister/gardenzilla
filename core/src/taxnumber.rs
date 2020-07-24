@@ -81,10 +81,6 @@ fn clean_characters(s: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
-    #[test]
-    fn taxnumber_test() {
-        unimplemented!();
-    }
 
     #[test]
     fn test_clean_format() {
