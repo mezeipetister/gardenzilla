@@ -111,9 +111,9 @@ pub struct Upl {
     sku: SKU,
     procurement_id: ProcurementId, // todo: maybe ProcurementId?
     net_procurement_price: f32,    // todo: sure?
-    net_retail_price_list: Option<f32>,
-    net_retail_price: Option<f32>,      // todo: price change history?
-    best_before: Option<DateTime<Utc>>, // todo: DateTime<Utc> or NaiveDate?
+    net_retail_price: Option<f32>,
+    net_retail_price_custom: Option<f32>, // todo: price change history?
+    best_before: Option<DateTime<Utc>>,   // todo: DateTime<Utc> or NaiveDate?
     quantity: Quantity, // todo: Should update all the times, when the SKU quantity updated
     unit: Unit,         // todo: Should be update all the times, when the SKU unit updated
     is_unopened: bool,
@@ -218,19 +218,43 @@ pub struct ProcurementItem {
     quantity: u32,
     expected_net_unit_price: f32,
     description: String,
-    upls: Vec<UplPhdr>,
+    upls: Vec<UplPhdr>, // todo: manage it here? Or create UPLs when Procurement closed as a last step?
 }
 
 pub struct Cart {
-    id: u32,
+    id: CartId,
     customer: CustomerId,
+    payment_kind: PaymentKind,
+    // delivery: (),
+    document_kind: DocumentKind,
     items: HashMap<SKU, CartItem>,
     total_net_price: f32,
     total_vat: f32,
     total_gross_price: f32,
     created_by: UserId,
     created_at: DateTime<Utc>,
-    is_closed: bool,
+}
+
+pub struct InvoiceHeader {
+    name: String,
+    address: String,
+    tax_number: u32,
+}
+
+pub enum PaymentKind {
+    Cash,
+    CreditCard,
+    Transfer,
+}
+
+pub enum DocumentKind {
+    Receipt,
+    Invoice,
+}
+
+pub enum DeliveryKind {
+    OnSite, // todo: location?
+    Delivery,
 }
 
 pub struct CartItem {
@@ -251,12 +275,6 @@ pub struct Purchase {
     document: DocumentKind,
     document_history: Vec<(DateTime<Utc>, DocumentKind)>,
     is_removed: bool,
-}
-
-pub enum DocumentKind {
-    Receipt,
-    Normal(InvoiceId),
-    Storno(InvoiceId),
 }
 
 pub struct Invoice {

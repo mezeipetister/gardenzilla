@@ -35,6 +35,7 @@ pub mod new;
 pub mod password;
 pub mod prelude;
 pub mod product;
+pub mod taxnumber;
 pub mod unit;
 pub mod upl;
 pub mod user;
