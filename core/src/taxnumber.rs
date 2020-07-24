@@ -54,32 +54,26 @@ impl TaxNumber {
 }
 
 // Hungarian tax number validation
-// based on the algorythm found here:
+// based on the algorithm found here:
 // https://hu.wikipedia.org/wiki/Ad%C3%B3sz%C3%A1m
 fn is_valid_checksum(s: &[u32; 8]) -> bool {
     let sum = s[0] * 9 + s[1] * 7 + s[2] * 3 + s[3] * 1 + s[4] * 9 + s[5] * 7 + s[6] * 3;
-    if let Some(last) = sum.to_string().chars().into_iter().last() {
-        if last == '0' {
-            if s[7] != 0 {
-                return false;
-            }
-        } else {
-            if let Some(l) = last.to_digit(10) {
-                if s[7] != (10 - l) {
-                    return false;
-                }
-            } else {
-                return false;
-            }
+    let last = sum % 10;
+    if last == 0 {
+        if s[7] != 0 {
+            return false;
         }
-        return true;
+    } else {
+        if s[7] != (10 - last) {
+            return false;
+        }
     }
-    false
+    return true;
 }
 
 fn clean_characters(s: &str) -> String {
     let mut result = s.to_string();
-    // Remain only numbers
+    // Remove everything but numbers
     result.retain(|c| c.is_numeric());
     result
 }
