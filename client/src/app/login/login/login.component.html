@@ -4,7 +4,8 @@
             rendszerbe</p> -->
         <div class="columns is-mobile">
             <div class="column is-6-tablet is-offset-3-tablet is-4-desktop is-offset-4-desktop">
-                <p class="has-text-centered title is-spaced has-background-success has-text-white title">BIT</p>
+                <p class="has-text-centered title is-spaced has-background-success has-text-white title">
+                    Gardenzilla</p>
                 <form (ngSubmit)="login()" #loginForm="ngForm" autocomplete="off">
                     <!-- 
                         Notification box
@@ -16,7 +17,7 @@
                     <div class="field">
                         <label class="label">Felhasználói név</label>
                         <div class="control has-icons-right">
-                            <input class="input" type="text" placeholder="e.g John Smith" [(ngModel)]="username"
+                            <input class="input" type="text" placeholder="pl Garden Zilla" [(ngModel)]="username"
                                 name="username" #uname="ngModel" required readonly
                                 onfocus="this.removeAttribute('readonly');" autocomplete="off">
                             <span class="icon is-small is-right" *ngIf='uname.invalid && (uname.dirty || pwd.touched)'>

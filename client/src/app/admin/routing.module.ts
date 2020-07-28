@@ -31,7 +31,7 @@ const routes: Routes = [
   {
     path: '', component: LayoutComponent, canActivateChild: [AuthGuard], children: [
       {
-        path: '', component: RepositoryComponent,
+        path: '', component: ProfileComponent,
       },
       { path: 'profile', component: ProfileComponent, data: { breadcrumb: 'Felhasználói profil' } },
       {

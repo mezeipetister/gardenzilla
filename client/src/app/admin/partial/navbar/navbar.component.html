@@ -1,9 +1,9 @@
-<nav class="navbar is-light is-success" role="navigation" aria-label="main navigation"
-    (document:keydown.alt.n)="shortcutNewTransaction();">
+<nav class="navbar" role="navigation" aria-label="main navigation" (document:keydown.alt.n)="shortcutNewTransaction();">
     <div class="container is-fullhd">
         <div class="navbar-brand">
             <a class="navbar-item" routerLink='/'>
-                <strong>BIT</strong>
+                <img src="favicon.ico">
+                <strong>Gardenzilla</strong>
                 <!-- <strong>Gardenzilla</strong> -->
             </a>
             <a class="navbar-item is-hidden-desktop" [routerLink]="['/repository', repository_id, 'transaction', 'new']"
@@ -22,11 +22,17 @@
 
         <div id="navbarBasicExample" class="navbar-menu" [ngClass]="{'is-active': isActive}">
             <div class="navbar-start">
-                <a class="navbar-item" routerLink='/repository'>
-                    Repository
+                <a class="navbar-item" routerLink="/">
+                    <span class="tag is-warning">POS</span>
+                </a>
+                <a class="navbar-item" routerLink="/">
+                    Termékek
                 </a>
                 <a class="navbar-item" routerLink="/user">
                     Felhasználók
+                </a>
+                <a class="navbar-item" routerLink="/">
+                    Vásárlók
                 </a>
             </div>
 

@@ -10,3 +10,5 @@
     Currently Hungarian is hardcoded in both the API error messages and the
     client. We should use internalisation to set the proper - and avaialable -
     language whenever we need.
+
+...

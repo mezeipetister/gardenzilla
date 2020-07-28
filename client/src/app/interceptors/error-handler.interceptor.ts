@@ -29,7 +29,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
                 // this.router.navigateByUrl('/login');
             }
             if (error.status == 400) {
-                alert("HIBA: " + error.error.message);
+                // alert("HIBA: " + error.error.message);
                 if (error.error instanceof ErrorResponse) {
                     // If standard API error
 
@@ -39,7 +39,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
                     return throwError(new HttpError('warning', error.error.message))
                 }
             } else {
-                alert("HIBA: " + error.error.message);
+                // alert("HIBA: " + error.error.message);
                 if (error.error instanceof ErrorResponse) {
                     // If standard API error
                     return throwError(new HttpError('danger', error.error.message))

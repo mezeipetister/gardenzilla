@@ -105,8 +105,15 @@ pub struct Product {
     unit: Unit,         // e.g.: ml
     net_retail_price: Option<f32>, // e.g.: 1000 HUF
     vat_percentage: Option<u32>, // e.g.: 27 => 27%, 0 | 5 | 18 | 27 based on the Hungarian tax law 2020
+    pest_category: Option<PestCategory>,
     created_by: UserId,
     created_at: DateTime<Utc>,
+}
+
+pub enum PestCategory {
+    I,
+    II,
+    III,
 }
 
 impl std::fmt::Display for Product {
@@ -129,14 +136,22 @@ pub struct Upl {
     sku: SKU,
     procurement_id: ProcurementId, // todo: maybe ProcurementId?
     net_procurement_price: f32,    // todo: sure?
-    net_retail_price: Option<f32>,
-    net_retail_price_custom: Option<f32>, // todo: price change history?
-    best_before: Option<DateTime<Utc>>,   // todo: DateTime<Utc> or NaiveDate?
+    net_retail_price: f32,
+    net_retail_price_custom: Option<f32>,
+    custom_price_history: Vec<UplCPH>,
+    best_before: Option<DateTime<Utc>>, // todo: DateTime<Utc> or NaiveDate?
     quantity: Quantity, // todo: Should update all the times, when the SKU quantity updated
     unit: Unit,         // todo: Should be update all the times, when the SKU unit updated
     is_unopened: bool,
     location: UplLocation,
     history: Vec<UplHistoryItem>, // todo: + DateTime per event. Only location change?
+    is_injured: bool,
+}
+
+pub struct UplCPH {
+    created_at: DateTime<Utc>,
+    created_by: UserId,
+    net_retail_price_custom: f32,
 }
 
 pub struct UplHistoryItem {
@@ -307,4 +322,11 @@ pub struct Purchase {
 pub struct Invoice {
     id: String,
     customer: String,
+}
+
+pub struct Customer {
+    id: CustomerId,
+    name: String,
+    phone: String,
+    email: String,
 }
