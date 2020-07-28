@@ -28,12 +28,47 @@
                 <a class="navbar-item" routerLink="/">
                     Termékek
                 </a>
-                <a class="navbar-item" routerLink="/user">
-                    Felhasználók
-                </a>
                 <a class="navbar-item" routerLink="/">
                     Vásárlók
                 </a>
+                <a class="navbar-item" routerLink="/">
+                    ISSUE
+                </a>
+
+
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Egyéb
+                    </a>
+
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" routerLink="/">
+                            Raktárak
+                        </a>
+                        <a class="navbar-item" routerLink="/">
+                            Számlák
+                        </a>
+                        <a class="navbar-item" routerLink="/">
+                            Eladások
+                        </a>
+                        <a class="navbar-item" routerLink="/user">
+                            Felhasználók
+                        </a>
+                        <a class="navbar-item" routerLink="/">
+                            Bevételezés
+                        </a>
+                        <a class="navbar-item" routerLink="/">
+                            Beszerzési források
+                        </a>
+                        <a class="navbar-item" routerLink="/">
+                            Kosarak
+                        </a>
+                        <hr class="navbar-divider">
+                        <a class="navbar-item">
+                            Report an issue
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <div class="navbar-end">
@@ -45,7 +80,7 @@
                 </a>
                 <a class="navbar-item" routerLink='/profile'>{{username}}</a>
                 <div class="navbar-item">
-                    <a (click)="logout()" class="has-text-white">
+                    <a (click)="logout()" class="has-text-grey">
                         <span class="icon">
                             <i class="fas fa-power-off"></i>
                         </span>
