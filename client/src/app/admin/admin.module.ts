@@ -33,6 +33,7 @@ import { TransactionNewComponent } from './transaction/transaction-new/transacti
 import { TransactionDetailComponent } from './transaction/transaction-detail/transaction-detail.component';
 import { ProjectNewComponent } from './project/project-new/project-new.component';
 import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
+import { CustomerComponent } from './customer/customer.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { ProjectDetailComponent } from './project/project-detail/project-detail.
     TransactionDetailComponent,
     ProjectNewComponent,
     ProjectDetailComponent,
+    CustomerComponent
   ],
   imports: [
     ChartsModule,

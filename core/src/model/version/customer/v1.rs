@@ -16,6 +16,8 @@
 // along with Gardenzilla.  If not, see <http://www.gnu.org/licenses/>.
 
 use crate::id;
+use crate::new::*;
+use crate::taxnumber::*;
 use chrono::prelude::*;
 use serde::{Deserialize, Serialize};
 use storaget::*;
@@ -27,45 +29,44 @@ impl TryFrom for Customer {
 // Implement StorageObject for NotificationContainer
 impl VecPackMember for Customer {
     fn get_id(&self) -> &str {
-        &self.id
+        &self.id.as_str()
     }
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Customer {
     /// ID for customer
-    id: String,
+    id: CustomerId,
     /// Vector of usernames
-    related_users: Vec<String>,
+    related_users: Vec<UserId>,
     name: String,
-    tax_number: String,
+    tax_number: TaxNumber,
     address: InvoiceAddress,
-    phone: String,
-    email: String,
-    date_created: DateTime<Utc>,
-    /// Username who created
-    created_by: String,
+    phone: String, // todo: Phone?
+    email: String, // todo: Email
+    created_at: DateTime<Utc>,
+    created_by: UserId,
 }
 
 impl Default for Customer {
     fn default() -> Self {
         Customer {
-            id: String::new(),
+            id: CustomerId::default(),
             related_users: Vec::new(),
             name: String::new(),
-            tax_number: String::new(),
+            tax_number: TaxNumber::default(),
             address: InvoiceAddress::default(),
             phone: String::new(),
             email: String::new(),
-            date_created: Utc::now(),
-            created_by: String::new(),
+            created_at: Utc::now(),
+            created_by: UserId::default(),
         }
     }
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct InvoiceAddress {
-    pub zip: String,
+    pub zip: u32,
     pub location: String,
     pub street: String,
 }
@@ -73,7 +74,7 @@ pub struct InvoiceAddress {
 impl Default for InvoiceAddress {
     fn default() -> Self {
         InvoiceAddress {
-            zip: String::new(),
+            zip: 0,
             location: String::new(),
             street: String::new(),
         }
@@ -81,7 +82,7 @@ impl Default for InvoiceAddress {
 }
 
 impl InvoiceAddress {
-    pub fn new(zip: String, location: String, street: String) -> Self {
+    pub fn new(zip: u32, location: String, street: String) -> Self {
         InvoiceAddress {
             zip,
             location,
@@ -92,15 +93,15 @@ impl InvoiceAddress {
 
 impl Customer {
     pub fn new(
-        id: String,
+        id: CustomerId,
         name: String,
         email: String,
         phone: String,
-        tax_number: String,
-        zip: String,
+        tax_number: TaxNumber,
+        zip: u32,
         location: String,
         street: String,
-        created_by: String,
+        created_by: UserId,
     ) -> Self {
         Customer {
             id,
@@ -110,12 +111,12 @@ impl Customer {
             address: InvoiceAddress::new(zip, location, street),
             email,
             phone,
-            date_created: Utc::now(),
+            created_at: Utc::now(),
             created_by,
         }
     }
     pub fn get_id(&self) -> &str {
-        &self.id
+        &self.id.as_str()
     }
     pub fn get_name(&self) -> &str {
         &self.name
@@ -126,24 +127,24 @@ impl Customer {
     pub fn has_user(&self) -> bool {
         self.related_users.len() > 0
     }
-    pub fn get_users(&self) -> &Vec<String> {
+    pub fn get_users(&self) -> &Vec<UserId> {
         &self.related_users
     }
-    pub fn remove_user(&mut self, username: &str) {
+    pub fn remove_user(&mut self, username: &UserId) {
         self.related_users.retain(|u| u != username);
     }
-    pub fn get_tax_number(&self) -> &str {
+    pub fn get_tax_number(&self) -> &TaxNumber {
         &self.tax_number
     }
-    pub fn set_tax_number(&mut self, tax_number: String) {
+    pub fn set_tax_number(&mut self, tax_number: TaxNumber) {
         self.tax_number = tax_number;
     }
-    pub fn set_address(&mut self, zip: String, location: String, street: String) {
+    pub fn set_address(&mut self, zip: u32, location: String, street: String) {
         self.address.zip = zip;
         self.address.location = location;
         self.address.street = street;
     }
-    pub fn get_address(&self) -> (String, String, String) {
+    pub fn get_address(&self) -> (u32, String, String) {
         (
             self.address.zip.clone(),
             self.address.location.clone(),
@@ -163,9 +164,31 @@ impl Customer {
         self.email = email;
     }
     pub fn get_date_created(&self) -> DateTime<Utc> {
-        self.date_created
+        self.created_at
     }
-    pub fn get_created_by(&self) -> String {
-        self.created_by.clone()
+    pub fn get_created_by(&self) -> &UserId {
+        &self.created_by
+    }
+}
+
+pub struct Email {
+    user: String,
+    provider: String,
+}
+
+fn clean_spaces(s: &str) -> String {
+    let mut result = s.to_string();
+    // Remove everything but numbers
+    result.retain(|c| !c.is_whitespace());
+    result
+}
+
+mod tests {
+    use super::*;
+    #[test]
+    fn test_clean_spaces() {
+        let d = "hello bello";
+        assert_eq!(clean_spaces(d), String::from("hellobello"));
+        assert_eq!(clean_spaces(d) == String::from("hello bello"), false);
     }
 }

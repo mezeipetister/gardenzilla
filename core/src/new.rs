@@ -18,6 +18,7 @@
 use crate::prelude::*;
 use crate::taxnumber::*;
 use chrono::prelude::*;
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
 /*
@@ -50,9 +51,25 @@ pub type UplId = u32;
 pub type ProcurementId = u32;
 pub type SourceId = u32;
 pub type InvoiceId = String;
-pub struct UserId();
-pub struct CustomerId();
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct UserId(String);
 
+impl PartialEq for UserId {
+    fn eq(&self, other: &Self) -> bool {
+        self.0 == other.0
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct CustomerId(String);
+
+impl CustomerId {
+    pub fn as_str(&self) -> &str {
+        &self.0
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum Unit {
     Piece,
     Millimeter,

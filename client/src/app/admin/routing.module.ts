@@ -26,6 +26,7 @@ import { TransactionNewComponent } from './transaction/transaction-new/transacti
 import { TransactionDetailComponent } from './transaction/transaction-detail/transaction-detail.component';
 import { ProjectNewComponent } from './project/project-new/project-new.component';
 import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
+import { CustomerComponent } from './customer/customer.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,7 @@ const routes: Routes = [
       {
         path: '', component: ProfileComponent,
       },
+      { path: 'customer', component: CustomerComponent, data: { breadcrumb: 'Vásárlók' } },
       { path: 'profile', component: ProfileComponent, data: { breadcrumb: 'Felhasználói profil' } },
       {
         path: 'repository', component: EmptyComponent, children: [

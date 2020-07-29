@@ -16,7 +16,9 @@
 // along with Gardenzilla.  If not, see <http://www.gnu.org/licenses/>.
 
 use crate::prelude::*;
+use serde::{Deserialize, Serialize};
 
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
 pub struct TaxNumber([u32; 11]);
 
 impl std::fmt::Display for TaxNumber {
