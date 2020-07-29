@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Pager } from 'src/app/class/pager';
 import { Profile } from 'src/app/class/profile';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -12,6 +13,7 @@ export class CustomerComponent implements OnInit {
   filter: string = "";
   users: Pager<Profile> = new Pager([], 10);
   buffer: Profile[] = null;
+  param: string = "";
 
   filterSubmit() {
     /**
@@ -25,13 +27,18 @@ export class CustomerComponent implements OnInit {
     this.users.navigate_to(1);
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.http.get<Profile[]>("/user/all").subscribe((val) => {
       val = val.sort((a, b) => a.date_created > b.date_created ? 1 : -1);
       this.users.set_data(val);
       this.buffer = val;
+    });
+    this.route.queryParams.subscribe(params => {
+      if (params.message) {
+        this.param = params.message;
+      }
     });
   }
 }
