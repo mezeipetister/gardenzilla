@@ -34,10 +34,13 @@ import { TransactionDetailComponent } from './transaction/transaction-detail/tra
 import { ProjectNewComponent } from './project/project-new/project-new.component';
 import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
 import { CustomerComponent } from './customer/customer.component';
+import { PosComponent } from './pos/pos.component';
+import { PosLayoutComponent } from './layout/pos-layout/pos-layout.component';
 
 @NgModule({
   declarations: [
     LayoutComponent,
+    PosLayoutComponent,
     NavbarComponent,
     ProfileComponent,
     ButtonSubmitComponent,
@@ -65,7 +68,8 @@ import { CustomerComponent } from './customer/customer.component';
     TransactionDetailComponent,
     ProjectNewComponent,
     ProjectDetailComponent,
-    CustomerComponent
+    CustomerComponent,
+    PosComponent
   ],
   imports: [
     ChartsModule,

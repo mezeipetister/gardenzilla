@@ -27,15 +27,23 @@ import { TransactionDetailComponent } from './transaction/transaction-detail/tra
 import { ProjectNewComponent } from './project/project-new/project-new.component';
 import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
 import { CustomerComponent } from './customer/customer.component';
+import { PosComponent } from './pos/pos.component';
+import { PosLayoutComponent } from './layout/pos-layout/pos-layout.component';
 
 const routes: Routes = [
+  {
+    path: 'pos', component: PosLayoutComponent, canActivateChild: [AuthGuard], children: [
+      { path: '', component: PosComponent, data: { title: "POS" } }
+    ]
+  },
   {
     path: '', component: LayoutComponent, canActivateChild: [AuthGuard], children: [
       {
         path: '', component: ProfileComponent,
       },
-      { path: 'customer', component: CustomerComponent, data: { breadcrumb: 'Vásárlók' } },
+      { path: 'customer', component: CustomerComponent, data: { title: 'Vásárlók', breadcrumb: 'Vásárlók' } },
       { path: 'profile', component: ProfileComponent, data: { breadcrumb: 'Felhasználói profil' } },
+      // { path: 'pos', component: PosComponent, data: { breadcrumb: 'POS' } },
       {
         path: 'repository', component: EmptyComponent, children: [
           { path: '', component: RepositoryComponent },

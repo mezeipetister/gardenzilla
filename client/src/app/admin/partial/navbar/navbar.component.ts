@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { LoginService } from 'src/app/services/login/login.service';
 import { Router, Event, NavigationEnd, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
@@ -13,6 +13,8 @@ import { RouterParamService } from 'src/app/services/router-param/router-param.s
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
+
+  @Input() is_full?: boolean = false;
 
   notifications: Notification[] = [];
   repository_id: String = null;

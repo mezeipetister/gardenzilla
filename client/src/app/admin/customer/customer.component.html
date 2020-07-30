@@ -4,6 +4,7 @@
         <p class="subtitle">{{param}}</p>
         <button class="button" routerLink="./" [queryParams]="{message:'Hello', other: true}">Hello</button>
         <button class="button" routerLink="./" [queryParams]="{message:'Bello'}">Bello</button>
+        <button class="button" routerLink="./" [queryParams]="goto(3)">C</button>
         <!-- Main container -->
         <nav class="level">
             <!-- Left side -->

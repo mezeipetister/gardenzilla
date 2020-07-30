@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Pager } from 'src/app/class/pager';
 import { Profile } from 'src/app/class/profile';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -14,6 +14,10 @@ export class CustomerComponent implements OnInit {
   users: Pager<Profile> = new Pager([], 10);
   buffer: Profile[] = null;
   param: string = "";
+  params: Obj = {
+    message: "",
+    page: 0,
+  };
 
   filterSubmit() {
     /**
@@ -27,7 +31,20 @@ export class CustomerComponent implements OnInit {
     this.users.navigate_to(1);
   }
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
+
+  // Hot keys tutorial
+  // https://netbasal.com/diy-keyboard-shortcuts-in-your-angular-application-4704734547a2
+  @HostListener('document:keydown.f1')
+  // QueryParams tutorial
+  // https://www.digitalocean.com/community/tutorials/angular-query-parameters
+  demo() { this.router.navigate(['./'], { queryParams: this.goto(9), queryParamsHandling: "merge", relativeTo: this.route }); }
+
+  goto(page: number): Obj {
+    this.params.page = page;
+    this.params.message = "Wohoo";
+    return this.params;
+  }
 
   ngOnInit() {
     this.http.get<Profile[]>("/user/all").subscribe((val) => {
@@ -41,4 +58,9 @@ export class CustomerComponent implements OnInit {
       }
     });
   }
+}
+
+export class Obj {
+  message: string;
+  page: number;
 }
