@@ -4,7 +4,9 @@ export class Pager<T> {
     constructor(
         public data: T[],
         public page_size: number = 10
-    ) { }
+    ) {
+        // this.set_view();
+    }
     /**
      * Store current page as state
      */
@@ -12,7 +14,7 @@ export class Pager<T> {
     /**
      * View page items
      */
-    public display: T[] = [];
+    private _display: T[] = [];
     set_data(data: T[]) {
         this.data = data;
         if (this.current_page > this.max_page_number()) { this.current_page = this.max_page_number(); }
@@ -21,11 +23,13 @@ export class Pager<T> {
     /**
      * Step ahead
      */
-    next() { if (this.current_page < this.max_page_number()) { this.current_page++; this.set_view(); } }
+    next() { this.current_page = this.next_page(); this.set_view(); }
+    next_page(): number { return this.current_page < this.max_page_number() ? this.current_page + 1 : this.current_page; }
     /**
      * Step back
      */
-    back() { if (this.current_page > 1) { this.current_page--; this.set_view(); } }
+    back() { this.current_page = this.previous_page(); this.set_view(); }
+    previous_page(): number { return this.current_page > 1 ? this.current_page - 1 : this.current_page; };
     /**
      * Navigate to page directly
      */
@@ -55,14 +59,14 @@ export class Pager<T> {
         }
         return res;
     }
-    _display(): T[] {
+    display(): T[] {
         this.set_view();
-        return this.display;
+        return this._display;
     }
     /**
      * Send paginated data to the subscribers
      */
     private set_view() {
-        this.display = this.pagination(this.data, this.page_size, this.current_page);
+        this._display = this.pagination(this.data, this.page_size, this.current_page);
     }
 }

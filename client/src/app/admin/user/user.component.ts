@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UserComponent implements OnInit {
   filter: string = "";
-  users: Pager<Profile> = new Pager([], 10);
+  users: Pager<Profile> = new Pager([]);
   buffer: Profile[] = null;
 
   filterSubmit() {

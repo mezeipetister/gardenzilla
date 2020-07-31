@@ -1,66 +1,104 @@
 <section class="section">
-    <div class="container is-fluid">
+    <div class="container is-fluid is-overlay">
         <div class="columns">
-            <div class="column is-2">
-                <p class="title is-3">Beállítások</p>
-                <aside class="menu">
-                    <p class="menu-label">
-                        General
-                    </p>
-                    <ul class="menu-list">
-                        <li><a>Dashboard</a></li>
-                        <li><a>Customers</a></li>
-                    </ul>
-                    <p class="menu-label">
-                        Administration
-                    </p>
-                    <ul class="menu-list">
-                        <li><a>Team Settings</a></li>
-                        <li>
-                            <a class="is-active">Manage Your Team</a>
-                            <ul>
-                                <li><a>Members</a></li>
-                                <li><a>Plugins</a></li>
-                                <li><a>Add a member</a></li>
-                            </ul>
-                        </li>
-                        <li><a>Invitations</a></li>
-                        <li><a>Cloud Storage Environment Settings</a></li>
-                        <li><a>Authentication</a></li>
-                    </ul>
-                    <p class="menu-label">
-                        Transactions
-                    </p>
-                    <ul class="menu-list">
-                        <li><a>Payments</a></li>
-                        <li><a>Transfers</a></li>
-                        <li><a>Balance</a></li>
-                    </ul>
-                </aside>
+            <div class="column is-4">
+                <p class="title is-4 is-inline-block">Keresés</p>
+                <input type="text" class="input" placeholder="Keresés...">
             </div>
             <div class="column">
-                Hello {{(counter$ | async) || 0}}
-                <div class="control">
-                    <input class="input" type="text" [ngModel]="(counter$ | async) || 0">
-                </div>
-                <ng-template #elseBlock>
-                    Nothing
-                </ng-template>
-                <ul>
-                    <li *ngFor="let user of customers$ | async">{{user.username}}</li>
-                </ul>
-                <hr>
                 <div class="columns">
                     <div class="column">
-                        <p class="title is-4">Items all</p>
-                        <br>
-                        <ul>
-                            <li *ngFor="let item of array._display()">{{item}}</li>
-                        </ul>
-                        <pagernav [data]="array"></pagernav>
+                        <p class="title is-4">Kosár</p>
                     </div>
+                    <div class="column is-3">
+
+                    </div>
+                </div>
+                <div class="tabs is-small">
+                    <ul>
+                        <li class="is-active"><a>Kosár 1</a></li>
+                        <li><a>Kosár 2</a></li>
+                        <li><a>Mezei Péter</a></li>
+                        <li><a>Kosár 4</a></li>
+                        <li class="has-text-centered">
+                            <a href="#">
+                                <span class="has-text-centered">
+                                    <i class="fas fa-plus" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="columns">
                     <div class="column">
-                        <button class="buttton" (click)="changeArrayFirst()">Change first</button>
+                        <table class="table is-fullwidth cart">
+                            <thead>
+                                <tr>
+                                    <th>Név</th>
+                                    <th>Ár</th>
+                                    <th></th>
+                                    <th>Db</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Kerti lombsebprű</td>
+                                    <td class="is-narrow">450.500 Ft</td>
+                                    <td class="is-narrow">
+                                        <span class="icon has-text-success">
+                                            <i class="fas fa-check-circle"></i>
+                                        </span>
+                                    </td>
+                                    <td class="is-narrow">
+                                        9/9
+                                    </td>
+                                </tr>
+                                <tr class="has-background-warning-light">
+                                    <td>Yara Milla lombtrágya 20-4-4 2 kg</td>
+                                    <td class="is-narrow">3.500 Ft</td>
+                                    <td class="is-narrow">
+                                        <span class="icon has-text-warning">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </span>
+                                    </td>
+                                    <td class="is-narrow">
+                                        3/1
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>UPL Benevia növényvédőszer krumplibogár ellen 50 ml</td>
+                                    <td class="is-narrow">3.500 Ft</td>
+                                    <td class="is-narrow">
+                                        <span class="icon has-text-success">
+                                            <i class="fas fa-check-circle"></i>
+                                        </span>
+                                    </td>
+                                    <td class="is-narrow">
+                                        1/1
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="column is-3 has-background-danger-light">
+                        <p class="title">127.000 Ft</p>
+                        <p class="subtitle is-spaced">100.000 Ft
+                            <span class="icon has-text-grey" (click)="message('A kosár nettó összege')">
+                                <i class="fas fa-info-circle"></i>
+                            </span>
+                        </p>
+                        <p class="title is-5">Vásárló</p>
+                        <p class="subtitle is-5 is-spaced">Mezei Péter</p>
+                        <p class="title is-5">Kedvezmény</p>
+                        <p class="subtitle is-5 is-spaced">0%</p>
+                        <p class="title is-5">Számla</p>
+                        <p class="subtitle is-5 is-spaced">4522 Nyírtass, Bem út 23/B.</p>
+                        <p class="title is-5">Adószám</p>
+                        <p class="subtitle is-5 is-spaced">-</p>
+                        <div class="buttons are-medium">
+                            <button class="button is-success is-fullwidth">Lezárás</button>
+                            <button class="button is-danger is-fullwidth is-outlined">Törlés</button>
+                        </div>
                     </div>
                 </div>
             </div>

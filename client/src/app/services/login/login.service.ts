@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Subject, EMPTY, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
 import { DataService } from '../data/data.service';
 import { Ok, Err, Result } from 'ts-results';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Token } from 'src/app/class/token';
 
 @Injectable({

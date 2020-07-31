@@ -41,7 +41,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let user of users.view; index as i;">
+                <tr *ngFor="let user of users.display(); index as i;">
                     <td>
                         <a [routerLink]="['./', user.username]" tabindex="0">{{user.username}}</a>
                     </td>
@@ -54,14 +54,7 @@
             </tbody>
         </table>
 
-        <div class="buttons has-addons is-centered" *ngIf="users.pages().length > 1">
-            <button class="button" (click)="users.back()">Előző</button>
-            <ng-container *ngFor="let page of users.pages()">
-                <button class="button" (click)="users.navigate_to(page)"
-                    [class.is-info]="users.current_page == page">{{page}}</button>
-            </ng-container>
-            <button class="button" (click)="users.next()">Következő</button>
-        </div>
+        <pagernav [data]="users"></pagernav>
 
     </div>
 </section>

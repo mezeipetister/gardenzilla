@@ -1,8 +1,10 @@
 <div class="buttons has-addons is-centered" *ngIf="data.pages().length > 1">
-    <button class="button" (click)="data.back()">Előző</button>
+    <a class="button" [routerLink]="['./']" [queryParams]="{page: data.previous_page()}"
+        queryParamsHandling="merge">Előző</a>
     <ng-container *ngFor="let page of data.pages()">
-        <button class="button" (click)="data.navigate_to(page)"
-            [class.is-info]="data.current_page == page">{{page}}</button>
+        <a class="button" [routerLink]="['./']" [queryParams]="{page: page}" queryParamsHandling="merge"
+            [class.is-info]="data.current_page == page">{{page}}</a>
     </ng-container>
-    <button class="button" (click)="data.next()">Következő</button>
+    <a class="button" [routerLink]="['./']" [queryParams]="{page: data.next_page()}"
+        queryParamsHandling="merge">Következő</a>
 </div>
