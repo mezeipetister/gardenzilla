@@ -3,6 +3,7 @@ import { Pager } from 'src/app/class/pager';
 import { Profile } from 'src/app/class/profile';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user',
@@ -10,6 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./customer.component.css']
 })
 export class CustomerComponent implements OnInit {
+  routeSubscription: Subscription;
+
   filter: string = "";
   users: Pager<Profile> = new Pager([], 10);
   buffer: Profile[] = null;
@@ -52,11 +55,15 @@ export class CustomerComponent implements OnInit {
       this.users.set_data(val);
       this.buffer = val;
     });
-    this.route.queryParams.subscribe(params => {
+    this.routeSubscription = this.route.queryParams.subscribe(params => {
       if (params.message) {
         this.param = params.message;
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.routeSubscription.unsubscribe();
   }
 }
 

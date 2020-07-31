@@ -36,11 +36,13 @@ import { ProjectDetailComponent } from './project/project-detail/project-detail.
 import { CustomerComponent } from './customer/customer.component';
 import { PosComponent } from './pos/pos.component';
 import { PosLayoutComponent } from './layout/pos-layout/pos-layout.component';
+import { PagernavComponent } from './partial/pagernav/pagernav.component';
 
 @NgModule({
   declarations: [
     LayoutComponent,
     PosLayoutComponent,
+    PagernavComponent,
     NavbarComponent,
     ProfileComponent,
     ButtonSubmitComponent,

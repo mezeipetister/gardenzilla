@@ -16,9 +16,14 @@ export class PosComponent implements OnInit {
 
   counter$: Observable<number>;
   customers$: Observable<Profile[]>;
+  array: Pager<number> = new Pager([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private title: Title) {
     this.counter$ = interval(1000);
+  }
+
+  changeArrayFirst() {
+    this.array.data[0]++;
   }
 
   getCustomers(): Observable<Profile[]> {

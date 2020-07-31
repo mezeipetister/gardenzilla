@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 export class Pager<T> {
     constructor(
         public data: T[],
-        public page_size: number
+        public page_size: number = 10
     ) { }
     /**
      * Store current page as state
@@ -12,7 +12,7 @@ export class Pager<T> {
     /**
      * View page items
      */
-    view: T[] = [];
+    public display: T[] = [];
     set_data(data: T[]) {
         this.data = data;
         if (this.current_page > this.max_page_number()) { this.current_page = this.max_page_number(); }
@@ -55,10 +55,14 @@ export class Pager<T> {
         }
         return res;
     }
+    _display(): T[] {
+        this.set_view();
+        return this.display;
+    }
     /**
      * Send paginated data to the subscribers
      */
     private set_view() {
-        this.view = this.pagination(this.data, this.page_size, this.current_page);
+        this.display = this.pagination(this.data, this.page_size, this.current_page);
     }
 }

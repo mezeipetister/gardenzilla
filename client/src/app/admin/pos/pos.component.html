@@ -49,6 +49,20 @@
                 <ul>
                     <li *ngFor="let user of customers$ | async">{{user.username}}</li>
                 </ul>
+                <hr>
+                <div class="columns">
+                    <div class="column">
+                        <p class="title is-4">Items all</p>
+                        <br>
+                        <ul>
+                            <li *ngFor="let item of array._display()">{{item}}</li>
+                        </ul>
+                        <pagernav [data]="array"></pagernav>
+                    </div>
+                    <div class="column">
+                        <button class="buttton" (click)="changeArrayFirst()">Change first</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

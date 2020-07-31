@@ -1,0 +1,8 @@
+<div class="buttons has-addons is-centered" *ngIf="data.pages().length > 1">
+    <button class="button" (click)="data.back()">Előző</button>
+    <ng-container *ngFor="let page of data.pages()">
+        <button class="button" (click)="data.navigate_to(page)"
+            [class.is-info]="data.current_page == page">{{page}}</button>
+    </ng-container>
+    <button class="button" (click)="data.next()">Következő</button>
+</div>
