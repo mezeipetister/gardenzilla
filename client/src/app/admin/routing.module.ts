@@ -29,6 +29,7 @@ import { ProjectDetailComponent } from './project/project-detail/project-detail.
 import { CustomerComponent } from './customer/customer.component';
 import { PosComponent } from './pos/pos.component';
 import { PosLayoutComponent } from './layout/pos-layout/pos-layout.component';
+import { StockComponent } from './stock/stock.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,7 @@ const routes: Routes = [
       {
         path: '', component: ProfileComponent,
       },
+      { path: 'stock', component: StockComponent, data: { title: 'Raktár', breadcrumb: 'Raktár' } },
       { path: 'customer', component: CustomerComponent, data: { title: 'Vásárlók', breadcrumb: 'Vásárlók' } },
       { path: 'profile', component: ProfileComponent, data: { breadcrumb: 'Felhasználói profil' } },
       // { path: 'pos', component: PosComponent, data: { breadcrumb: 'POS' } },

@@ -37,6 +37,7 @@ import { CustomerComponent } from './customer/customer.component';
 import { PosComponent } from './pos/pos.component';
 import { PosLayoutComponent } from './layout/pos-layout/pos-layout.component';
 import { PagernavComponent } from './partial/pagernav/pagernav.component';
+import { StockComponent } from './stock/stock.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { PagernavComponent } from './partial/pagernav/pagernav.component';
     ProjectNewComponent,
     ProjectDetailComponent,
     CustomerComponent,
-    PosComponent
+    PosComponent,
+    StockComponent
   ],
   imports: [
     ChartsModule,
