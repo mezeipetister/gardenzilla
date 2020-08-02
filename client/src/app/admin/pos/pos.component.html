@@ -36,9 +36,9 @@
                                 <tr>
                                     <th></th>
                                     <th>Név</th>
+                                    <th>Kiszerelés</th>
                                     <th></th>
-                                    <th></th>
-                                    <th>Db</th>
+                                    <th>Mennyiség</th>
                                     <th>Ár</th>
                                 </tr>
                             </thead>
@@ -89,6 +89,34 @@
                                     </td>
                                     <td class="is-narrow">3.500 Ft</td>
                                 </tr>
+                                <tr>
+                                    <td class="is-narrow"></td>
+                                    <td>Bordóilé neo SC 1 liter</td>
+                                    <td class="is-narrow">1 liter</td>
+                                    <td class="is-narrow">
+                                        <span class="icon has-text-success">
+                                            <i class="fas fa-check-circle"></i>
+                                        </span>
+                                    </td>
+                                    <td class="is-narrow">
+                                        1/1
+                                    </td>
+                                    <td class="is-narrow">3.900 Ft</td>
+                                </tr>
+                                <tr>
+                                    <td class="is-narrow"></td>
+                                    <td>Bordóilé neo SC 1 liter</td>
+                                    <td class="is-narrow">300 ml</td>
+                                    <td class="is-narrow">
+                                        <span class="icon has-text-success">
+                                            <i class="fas fa-check-circle"></i>
+                                        </span>
+                                    </td>
+                                    <td class="is-narrow">
+                                        1/1
+                                    </td>
+                                    <td class="is-narrow">1.750 Ft</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -117,3 +145,57 @@
         </div>
     </div>
 </section>
+
+<button (click)="demo1.open()">Demo1</button>
+<button (click)="demo2.open()">Demo2</button>
+<button (click)="demo3.open()">Demo3</button>
+
+<modal #demo2>
+    Hello Bello
+</modal>
+
+<modal #demo3>
+    <p class="title">Hello Bello</p>
+</modal>
+
+<modal #demo1>
+    <div class="columns">
+        <div class="column is-4">
+            <aside class="menu">
+                <p class="menu-label">
+                    General
+                </p>
+                <ul class="menu-list">
+                    <li><a>Dashboard</a></li>
+                    <li><a>Customers</a></li>
+                </ul>
+                <p class="menu-label">
+                    Administration
+                </p>
+                <ul class="menu-list">
+                    <li><a>Team Settings</a></li>
+                    <li><a>Team Settings 2</a></li>
+                </ul>
+            </aside>
+        </div>
+        <div class="column content">
+            <p class="title is-4">Hello bello</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore labore temporibus perferendis
+                eveniet, libero doloremque!</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore labore temporibus perferendis
+                eveniet, libero doloremque!</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore labore temporibus perferendis
+                eveniet, libero doloremque!</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore labore temporibus perferendis
+                eveniet, libero doloremque!</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore labore temporibus perferendis
+                eveniet, libero doloremque!</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore labore temporibus perferendis
+                eveniet, libero doloremque!</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore labore temporibus perferendis
+                eveniet, libero doloremque!</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore labore temporibus perferendis
+                eveniet, libero doloremque!</p>
+        </div>
+    </div>
+</modal>

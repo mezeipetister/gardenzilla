@@ -38,6 +38,7 @@ import { PosComponent } from './pos/pos.component';
 import { PosLayoutComponent } from './layout/pos-layout/pos-layout.component';
 import { PagernavComponent } from './partial/pagernav/pagernav.component';
 import { StockComponent } from './stock/stock.component';
+import { ModalComponent } from './partial/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { StockComponent } from './stock/stock.component';
     NavbarComponent,
     ProfileComponent,
     ButtonSubmitComponent,
+    ModalComponent,
     ErrorDisplayComponent,
     UserComponent,
     UserNewComponent,
