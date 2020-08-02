@@ -3,7 +3,7 @@
         <div class="columns">
             <div class="column is-4">
                 <p class="title is-4 is-inline-block">Keresés</p>
-                <input type="text" class="input" placeholder="Keresés...">
+                <input type="text" class="input" placeholder="Keresés..." [(ngModel)]="search">
             </div>
             <div class="column">
                 <div class="columns">
@@ -150,15 +150,15 @@
 <button (click)="demo2.open()">Demo2</button>
 <button (click)="demo3.open()">Demo3</button>
 
-<modal #demo2>
+<modal #demo2 title="Demo2" [hasCancel]="true" [callbackSubmit]="['Létrehoz', demo]">
     Hello Bello
 </modal>
 
-<modal #demo3>
+<modal #demo3 title="demo3">
     <p class="title">Hello Bello</p>
 </modal>
 
-<modal #demo1>
+<modal #demo1 title="Demo TITLE">
     <div class="columns">
         <div class="column is-4">
             <aside class="menu">

@@ -17,7 +17,14 @@ export class PosComponent implements OnInit {
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private title: Title) { }
   ngOnInit() { }
 
+  search: string = '';
+  life: number = 42;
+
   message(msg: string) {
     alert(msg);
+  }
+
+  demo = () => {
+    alert('Search is ' + this.search);
   }
 }
