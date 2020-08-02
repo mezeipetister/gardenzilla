@@ -19,9 +19,18 @@ export class PosComponent implements OnInit {
 
   search: string = '';
   life: number = 42;
+  isSearchUser: boolean = false;
 
   message(msg: string) {
     alert(msg);
+  }
+
+  checkSearchType() {
+    if (this.search.charAt(0) == '@') {
+      this.isSearchUser = true;
+    } else {
+      this.isSearchUser = false;
+    }
   }
 
   demo = () => {

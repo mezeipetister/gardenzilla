@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnChanges, HostListener } from '@angular/core';
 import { Model } from 'src/app/class/model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'modal',
@@ -16,6 +17,7 @@ export class ModalComponent implements OnChanges {
   @Input() callbackSubmit?: [string, Function];
 
   isActive: boolean = false;
+  subscription: Subscription;
 
   @HostListener('document:keydown.esc')
   close() {
@@ -35,4 +37,5 @@ export class ModalComponent implements OnChanges {
   }
 
   ngOnChanges() { }
+  ngOnDestroy() { }
 }
