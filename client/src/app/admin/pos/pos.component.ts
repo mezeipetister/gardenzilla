@@ -33,6 +33,10 @@ export class PosComponent implements OnInit {
     }
   }
 
+  clearSearch() {
+    this.search = '';
+  }
+
   demo = () => {
     alert('Search is ' + this.search);
   }

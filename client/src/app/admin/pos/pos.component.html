@@ -5,8 +5,9 @@
                 <p class="title is-4 is-inline-block">Keresés</p>
                 <div class="field has-addons">
                     <div class="control is-expanded has-icons-left">
-                        <input type="text" class="input" placeholder="Keresés..." [(ngModel)]="search"
-                            (keydown)="checkSearchType()">
+                        <input #searchInput type="text" class="input" placeholder="Keresés..." [(ngModel)]="search"
+                            (keyup)="checkSearchType()" (keydown.esc)="clearSearch()"
+                            (document:keydown.f1)="searchInput.focus()">
                         <span class="icon is-small is-left">
                             <i class="fas fa-box fa-xs" *ngIf="!isSearchUser"></i>
                             <i class="fas fa-user fa-xs" *ngIf="isSearchUser"></i>
@@ -16,11 +17,21 @@
                         <a class="button">Keresés</a>
                     </div>
                 </div>
+                <div class="message is-warning" *ngIf="isSearchUser">
+                    <div class="message-body"><a>Új vásárló létrehozása</a></div>
+                </div>
             </div>
             <div class="column">
                 <div class="columns">
                     <div class="column">
                         <p class="title is-4 is-inline-block">Kosár
+                        </p>
+                        <p class="subtitle is-inline-block ml-4">
+                            <a>
+                                <span class="icon has-text-grey">
+                                    <i class="fas fa-layer-group" aria-hidden="true"></i>
+                                </span>
+                            </a>
                         </p>
                         <p class="subtitle is-inline-block ml-4">
                             <a (click)="message('Önnek egy aktív kosara van')">
@@ -69,7 +80,7 @@
 
                     </div>
                 </div>
-                <div class="tabs is-small">
+                <!-- <div class="tabs is-small">
                     <ul>
                         <li class="is-active"><a>Kosár 1</a></li>
                         <li><a>Kosár 2</a></li>
@@ -83,7 +94,7 @@
                             </a>
                         </li>
                     </ul>
-                </div>
+                </div> -->
                 <div class="columns">
                     <div class="column">
                         <table class="table is-fullwidth cart">
