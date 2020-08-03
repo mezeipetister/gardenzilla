@@ -22,8 +22,18 @@
                 </div>
                 <table class="table is-fullwidth">
                     <tbody>
+                        <ng-container *ngIf="!search">
+                            <tr>
+                                <td class="has-text-centered pt-6">
+                                    <span class="icon has-text-grey-lighter is-large">
+                                        <i class="fas fa-ellipsis-h fa-3x" aria-hidden="true"></i>
+                                    </span>
+                                    <p class="subtitle is-5 has-text-grey-lighter">(Üres)</p>
+                                </td>
+                            </tr>
+                        </ng-container>
                         <!-- Customer search demo -->
-                        <ng-container *ngIf="isSearchUser">
+                        <ng-container *ngIf="isSearchUser && search">
                             <tr *ngFor="let customer of egCustomers.display()">
                                 <td>
                                     <p class="title is-6">{{customer.name}}</p>
@@ -35,7 +45,7 @@
                             </tr>
                         </ng-container>
                         <!-- Product search demo -->
-                        <ng-container *ngIf="!isSearchUser">
+                        <ng-container *ngIf="!isSearchUser && search">
                             <tr *ngFor="let sku of egProducts.display()">
                                 <td>
                                     <p class="title is-6">{{sku.name}}, {{sku.quantity}} {{sku.unit}}</p>
