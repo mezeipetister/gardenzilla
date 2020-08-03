@@ -14,6 +14,7 @@ export class PagernavComponent implements OnInit {
   @Input() offline?: boolean = false;
   @Input() count?: number = 10;
   @Input() isCompact?: boolean = false;
+  @Input() isSmall?: boolean = false;
   routeSubscription: Subscription;
 
   constructor(private route: ActivatedRoute) { }

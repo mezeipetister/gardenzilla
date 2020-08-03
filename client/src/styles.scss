@@ -25,6 +25,15 @@ $modal-background-background-color: bulmaRgba($scheme-invert, 0.7);
 
 @import "../node_modules/bulma/bulma.sass";
 
+.modal-wide {
+    .modal-card {
+        // width: $modal-content-width;
+        @include desktop {
+            width: 1200px !important;
+        }
+    }
+}
+
 .container.is-narrow {
     width: $desktop !important;
 }

@@ -13,8 +13,8 @@ export class ModalComponent implements OnChanges {
   // @Input() model: Model<any>;
   @Input() title?: string = '';
   @Input() hasCancel?: boolean = false;
-
   @Input() callbackSubmit?: [string, Function];
+  @Input() isWide?: boolean = false;
 
   isActive: boolean = false;
   subscription: Subscription;
@@ -24,7 +24,7 @@ export class ModalComponent implements OnChanges {
     this.isActive = false;
   }
 
-  open() {
+  open(data?: any) {
     this.isActive = true;
   }
 
