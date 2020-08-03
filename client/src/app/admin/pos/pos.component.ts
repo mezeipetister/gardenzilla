@@ -21,6 +21,36 @@ export class PosComponent implements OnInit {
   life: number = 42;
   isSearchUser: boolean = false;
 
+  egCustomers: Pager<any> = new Pager([
+    { name: 'Example 1', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 2', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 3', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 4', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 5', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 6', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 7', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 8', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 9', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 10', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 11', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 12', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 13', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 14', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 15', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 16', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 17', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 18', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+    { name: 'Example 19', address: '4522 Nyírtass, Alkotmány út 55.', taxnumber: '2346543-1-23' },
+  ]);
+
+  egProducts: Pager<any> = new Pager([
+    { name: 'Bordóilé neo SC', quantity: 250, unit: 'ml', net_retail_price: 3900.0, stock_ok: 3, stock_injured: 1 },
+    { name: 'Bordóilé neo SC', quantity: 1, unit: 'l', net_retail_price: 1500.12, stock_ok: 24, stock_injured: 0 },
+    { name: 'Bordóilé neo SC', quantity: 5, unit: 'l', net_retail_price: 9500.0, stock_ok: 3, stock_injured: 1 },
+    { name: 'Bordóilé neo SC', quantity: 20, unit: 'l', net_retail_price: 32900.0, stock_ok: 3, stock_injured: 1 },
+    { name: 'Gardena kerti locsoló + tömlő', quantity: 25, unit: 'm', net_retail_price: 11700.27, stock_ok: 1, stock_injured: 0 },
+  ]);
+
   message(msg: string) {
     alert(msg);
   }

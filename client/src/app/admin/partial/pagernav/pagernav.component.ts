@@ -11,6 +11,9 @@ import { Subscription } from 'rxjs';
 export class PagernavComponent implements OnInit {
 
   @Input() data: Pager<any>;
+  @Input() offline?: boolean = false;
+  @Input() count?: number = 10;
+  @Input() isCompact?: boolean = false;
   routeSubscription: Subscription;
 
   constructor(private route: ActivatedRoute) { }
@@ -27,6 +30,7 @@ export class PagernavComponent implements OnInit {
           let tryint = parseInt(params.page);
           goto = tryint != NaN ? tryint : 1;
         }
+        this.data.page_size = this.count;
         this.data.navigate_to(goto);
       });
     }, 0);

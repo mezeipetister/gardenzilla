@@ -5,11 +5,15 @@
 // You can easily customize Bulma with your own variables.
 // Just uncomment the following block to see the result.
 
+@import "../node_modules/bulma/sass/utilities/_all.sass";
+
 $widescreen-enabled: false;
 $fullhd-enabled: false;
 
 // Modal temp settings
 $modal-content-width: 800px;
+$modal-background-background-color: bulmaRgba($scheme-invert, 0.7);
+// $modal-background-background-color: rgba(255,255,255,0.8);
 
 // // 1. Import the initial variables
 // @import "../node_modules/bulma/sass/utilities/initial-variables"
