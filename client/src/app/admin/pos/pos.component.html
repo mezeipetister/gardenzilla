@@ -43,11 +43,18 @@
                                 </td>
                                 <td class="is-narrow has-text-centered">
                                     <a (click)="message('Önnek egy aktív kosara van')">
+                                        <span class="icon has-text-danger is-small" *ngIf="sku.stock_ok == 0">
+                                            <i class="fas fa-exclamation" aria-hidden="true"></i>
+                                        </span>
                                         <span class="icon has-text-grey is-small">
                                             <i class="far fa-list-alt" aria-hidden="true"></i>
                                         </span>
                                     </a>
-                                    <p class="subtitle is-7">{{sku.stock_ok}} / {{sku.stock_injured}}</p>
+                                    <p class="subtitle is-7">
+                                        <span>{{sku.stock_ok}}</span>
+                                        /
+                                        <span>{{sku.stock_injured}}</span> /
+                                        <span>{{sku.stock_global}}</span></p>
                                 </td>
                                 <td>
                                     <button class="button is-small">Kosárba</button>

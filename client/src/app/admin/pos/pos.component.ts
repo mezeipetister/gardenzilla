@@ -44,11 +44,11 @@ export class PosComponent implements OnInit {
   ]);
 
   egProducts: Pager<any> = new Pager([
-    { name: 'Bordóilé neo SC', quantity: 250, unit: 'ml', net_retail_price: 3900.0, stock_ok: 3, stock_injured: 1 },
-    { name: 'Bordóilé neo SC', quantity: 1, unit: 'l', net_retail_price: 1500.12, stock_ok: 24, stock_injured: 0 },
-    { name: 'Bordóilé neo SC', quantity: 5, unit: 'l', net_retail_price: 9500.0, stock_ok: 3, stock_injured: 1 },
-    { name: 'Bordóilé neo SC', quantity: 20, unit: 'l', net_retail_price: 32900.0, stock_ok: 3, stock_injured: 1 },
-    { name: 'Gardena kerti locsoló + tömlő', quantity: 25, unit: 'm', net_retail_price: 11700.27, stock_ok: 1, stock_injured: 0 },
+    { name: 'Bordóilé neo SC', quantity: 250, unit: 'ml', net_retail_price: 3900.0, stock_ok: 3, stock_injured: 1, stock_global: 0 },
+    { name: 'Bordóilé neo SC', quantity: 1, unit: 'l', net_retail_price: 1500.12, stock_ok: 24, stock_injured: 0, stock_global: 0 },
+    { name: 'Bordóilé neo SC', quantity: 5, unit: 'l', net_retail_price: 9500.0, stock_ok: 0, stock_injured: 1, stock_global: 0 },
+    { name: 'Bordóilé neo SC', quantity: 20, unit: 'l', net_retail_price: 32900.0, stock_ok: 0, stock_injured: 1, stock_global: 0 },
+    { name: 'Gardena kerti locsoló + tömlő', quantity: 25, unit: 'm', net_retail_price: 11700.27, stock_ok: 1, stock_injured: 0, stock_global: 0 },
   ]);
 
   message(msg: string) {
