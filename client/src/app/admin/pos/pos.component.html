@@ -35,7 +35,7 @@
                                     <span class="icon has-text-grey-lighter is-large">
                                         <i class="fas fa-ellipsis-h fa-3x" aria-hidden="true"></i>
                                     </span>
-                                    <p class="subtitle is-5 has-text-grey-lighter">(Üres)</p>
+                                    <p class="subtitle is-5 has-text-grey-lighter">(Keresés)</p>
                                 </td>
                             </tr>
                         </ng-container>
@@ -93,11 +93,26 @@
                         <p class="title is-4 is-inline-block">Kosár</p>
                         <p class="subtitle is-inline-block ml-4">
                             <a (click)="cartList.open('bruhaha')" title="Nyitott kosarak">
-                                <span class="icon has-text-danger" data-tooltip="Hello">
-                                    <i class="fas fa-layer-group" aria-hidden="true"></i>
+                                <!-- <span class="icon has-text-danger" data-tooltip="Hello">
+                                    <i class="fas fa-shopping-bag" aria-hidden="true"></i>
+                                </span> -->
+                                <span class="icon has-text-grey">
+                                    <span class="fa-stack">
+                                        <i class="fas fa-shopping-bag"></i>
+                                        <i class="fas fa-circle circle"></i>
+                                        <!-- <strong class="fas fa-stack-1x"
+                                            style="margin-top: .3em; font-size: 9px;">27</strong> -->
+                                    </span>
                                 </span>
+
                             </a>
                         </p>
+                        <!-- <p class="subtitle is-inline-block ml-4">
+                            <span class="fa-stack">
+                                <i class="fas fa-shopping-bag"></i>
+                                <strong class="badgetext">2</strong>
+                            </span>
+                        </p> -->
                         <p class="subtitle is-inline-block ml-4">
                             <a (click)="message('Önnek egy aktív kosara van')">
                                 <span class="icon has-text-grey">
@@ -108,17 +123,17 @@
                         <p class="subtitle is-inline-block ml-4">
                             <a>
                                 <span class="icon has-text-grey">
-                                    <i class="far fa-check-circle" aria-hidden="true"></i>
+                                    <i class="fas fa-percentage" aria-hidden="true"></i>
                                 </span>
                             </a>
                         </p>
-                        <p class="subtitle is-inline-block ml-4">
+                        <!-- <p class="subtitle is-inline-block ml-4">
                             <a>
                                 <span class="icon has-text-grey">
                                     <i class="fas fa-th" aria-hidden="true"></i>
                                 </span>
                             </a>
-                        </p>
+                        </p> -->
                         <p class="subtitle is-inline-block ml-4">
                             <a>
                                 <span class="icon has-text-grey">
@@ -126,13 +141,13 @@
                                 </span>
                             </a>
                         </p>
-                        <p class="subtitle is-inline-block ml-4">
+                        <!-- <p class="subtitle is-inline-block ml-4">
                             <a>
                                 <span class="icon has-text-grey">
                                     <i class="fas fa-sync" aria-hidden="true"></i>
                                 </span>
                             </a>
-                        </p>
+                        </p> -->
                         <p class="subtitle is-inline-block ml-4">
                             <a title="Új kosár">
                                 <span class="icon has-text-grey">
@@ -189,7 +204,7 @@
                                         </a>
                                     </td>
                                     <td class="is-narrow">
-                                        9/9
+                                        <a (click)="cartItemPieceSetter.open()">9/9</a>
                                     </td>
                                     <td class="is-narrow">450.500 Ft</td>
                                 </tr>
@@ -266,7 +281,14 @@
                             </span>
                         </p>
                         <p class="title is-5">Vásárló</p>
-                        <p class="subtitle is-5 is-spaced">Mezei Péter</p>
+                        <p class="subtitle is-5 is-spaced">
+                            Mezei Péter
+                            <a title="Vásárló törlése">
+                                <span class="icon has-text-grey is-size-6">
+                                    <i class="fas fa-times" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </p>
                         <p class="title is-5">Kedvezmény</p>
                         <p class="subtitle is-5 is-spaced">0%</p>
                         <p class="title is-5">Számla</p>
@@ -289,21 +311,21 @@
 <button (click)="demo3.open()">Demo3</button> -->
 
 <modal title="Nyitott kosaraim" #cartList>
-    <table class="table">
+    <table class="table is-size-7">
         <thead>
             <tr>
                 <th>Vásárló</th>
-                <th>Elemszám</th>
                 <th>Darabszám</th>
+                <th>Termékek</th>
                 <th>Nyitás dátuma</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>-</td>
+                <td class="is-narrow">-</td>
                 <td class="is-narrow">5</td>
-                <td class="is-narrow">15</td>
+                <td>Teldor ampullás, Laudis, Gladiátor Forte</td>
                 <td class="is-narrow">2020-08-01 14:12:09</td>
                 <td class="">
                     <div class="buttons">
@@ -313,9 +335,9 @@
                 </td>
             </tr>
             <tr>
-                <td>Mezei Péter</td>
+                <td class="is-narrow">Mezei Péter</td>
                 <td class="is-narrow">5</td>
-                <td class="is-narrow">15</td>
+                <td></td>
                 <td class="is-narrow">2020-08-01 14:12:09</td>
                 <td class="">
                     <div class="buttons">
@@ -345,7 +367,7 @@
                     </li>
                     <li>
                         <a>
-                            <span>Globális (2)</span>
+                            <span>Máshol (2)</span>
                         </a>
                     </li>
                 </ul>
@@ -394,16 +416,8 @@
                 <td class="is-narrow">{{1750 | number}} HUF</td>
                 <td>
                     <div class="buttons">
-                        <a title="Kosárba" class="button is-small">Kosárba
-                            <!-- <span class="icon has-text-grey">
-                                <i class="fas fa-shopping-bag"></i>
-                            </span> -->
-                        </a>
-                        <a title="Megbont" class="button is-small">Megbont
-                            <!-- <span class="icon has-text-grey">
-                                <i class="fas fa-cut"></i>
-                            </span> -->
-                        </a>
+                        <!-- <a title="Kosárba" class="button is-small">Kosárba</a> -->
+                        <a title="Megbont" class="button is-small" *ngIf="i % 2 != 0">Megbont</a>
                     </div>
                 </td>
             </tr>
@@ -421,7 +435,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of [0,1,2,3,4,5]; index as i" [class.has-background-success]="i % 2 == 0">
+            <tr *ngFor="let item of [0,1,2,3,4,5]; index as i" [class.has-background-primary]="i % 2 == 0">
                 <td>Nyírtass bolt - {{i}}</td>
                 <td>{{4 * (i % 3)}}</td>
                 <td>{{0}}</td>
@@ -459,6 +473,21 @@
             </tr>
         </tbody>
     </table>
+</modal>
+
+<modal #cartItemPieceSetter [title]="'Darabszám'">
+    <p class="subtitle">Kerti lobseprű</p>
+    <div class="field has-addons">
+        <div class="control">
+            <input type="text" class="input" value="9">
+        </div>
+        <div class="control">
+            <button class="button">+</button>
+        </div>
+        <div class="control">
+            <button class="button">-</button>
+        </div>
+    </div>
 </modal>
 
 <modal #demo2 title="Demo2" [hasCancel]="true" [callbackSubmit]="['Létrehoz', demo]">
