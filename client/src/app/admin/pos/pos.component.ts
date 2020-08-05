@@ -7,6 +7,7 @@ import { Title } from '@angular/platform-browser';
 import { Observable, from, interval, of, BehaviorSubject, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ModalComponent } from '../partial/modal/modal.component';
+import { ElementSchemaRegistry, NullTemplateVisitor } from '@angular/compiler';
 
 @Component({
   selector: 'app-user',
@@ -14,7 +15,6 @@ import { ModalComponent } from '../partial/modal/modal.component';
   styleUrls: ['./pos.component.scss']
 })
 export class PosComponent implements OnInit {
-  @ViewChild('searchInput') searchInput: ElementRef;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private title: Title) { }
   ngOnInit() { }
@@ -78,6 +78,17 @@ export class PosComponent implements OnInit {
     confirm("Biztosan eltávolítasz minden UPL-t?");
   }
 
+  searchEnter(event) {
+    let query = event.target.value;
+    let upl = this.processUpl(query);
+    if (upl) {
+      console.log('UPL is ' + upl.toString());
+      this.search = upl.toString();
+    } else {
+      console.log('No upl! Query is: ' + query);
+    }
+  }
+
   @HostListener('document:keydown.f6', ['$event'])
   cartModeSwitch(event?: Event) {
     if (event) {
@@ -95,13 +106,16 @@ export class PosComponent implements OnInit {
     }
   }
 
+  @ViewChild('searchInput', { read: ElementRef, static: false }) searchInput: ElementRef;
   @HostListener('document:keydown.f1', ['$event'])
   searchInputFocus(event?: Event) {
     if (event) {
       event.preventDefault();
     }
     this.clearSearch();
-    this.searchInput.nativeElement.focus();
+    setTimeout(() => {
+      this.searchInput.nativeElement.focus();
+    }, 0);
   }
 
   @ViewChild('cartList') cartList: ModalComponent;
@@ -122,6 +136,14 @@ export class PosComponent implements OnInit {
   displayShortcuts(event: Event) {
     event.preventDefault();
     this.keyboardShortcuts.open();
+  }
+
+  processUpl(query: string): number {
+    let parts: string[] = query.split('/');
+    if (parts[parts.length - 2] == 'upl') {
+      return +parts[parts.length - 1];
+    }
+    return null;
   }
 
   openNewCart() {
