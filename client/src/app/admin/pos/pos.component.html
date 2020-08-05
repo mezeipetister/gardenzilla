@@ -13,8 +13,7 @@
                 <div class="field has-addons">
                     <div class="control is-expanded has-icons-left">
                         <input #searchInput type="text" class="input" placeholder="Keresés..." [(ngModel)]="search"
-                            (keyup)="checkSearchType()" (keydown.esc)="clearSearch()"
-                            (document:keydown.f1)="searchInput.focus()">
+                            (keyup)="checkSearchType()" (keydown.esc)="clearSearch()">
                         <span class="icon is-small is-left">
                             <i class="fas fa-box fa-xs" *ngIf="!isSearchUser"></i>
                             <i class="fas fa-user fa-xs" *ngIf="isSearchUser"></i>
@@ -92,34 +91,23 @@
                     <div class="column">
                         <p class="title is-4 is-inline-block">Kosár</p>
                         <p class="subtitle is-inline-block ml-4">
-                            <a (click)="cartList.open('bruhaha')" title="Nyitott kosarak">
-                                <!-- <span class="icon has-text-danger" data-tooltip="Hello">
-                                    <i class="fas fa-shopping-bag" aria-hidden="true"></i>
-                                </span> -->
+                            <a title="Nyitott kosarak" (document:keydown.f3)="cartList.open()">
                                 <span class="icon has-text-grey">
                                     <span class="fa-stack">
                                         <i class="fas fa-shopping-bag"></i>
                                         <i class="fas fa-circle circle"></i>
-                                        <!-- <strong class="fas fa-stack-1x"
-                                            style="margin-top: .3em; font-size: 9px;">27</strong> -->
                                     </span>
                                 </span>
 
                             </a>
                         </p>
                         <!-- <p class="subtitle is-inline-block ml-4">
-                            <span class="fa-stack">
-                                <i class="fas fa-shopping-bag"></i>
-                                <strong class="badgetext">2</strong>
-                            </span>
-                        </p> -->
-                        <p class="subtitle is-inline-block ml-4">
                             <a (click)="message('Önnek egy aktív kosara van')">
                                 <span class="icon has-text-grey">
                                     <i class="far fa-list-alt" aria-hidden="true"></i>
                                 </span>
                             </a>
-                        </p>
+                        </p> -->
                         <p class="subtitle is-inline-block ml-4">
                             <a>
                                 <span class="icon has-text-grey">
@@ -141,17 +129,28 @@
                                 </span>
                             </a>
                         </p>
-                        <!-- <p class="subtitle is-inline-block ml-4">
-                            <a>
+                        <p class="subtitle is-inline-block ml-4">
+                            <a (click)="clearUpls()">
                                 <span class="icon has-text-grey">
-                                    <i class="fas fa-sync" aria-hidden="true"></i>
+                                    <i class="fas fa-eraser" aria-hidden="true"></i>
                                 </span>
                             </a>
-                        </p> -->
+                        </p>
                         <p class="subtitle is-inline-block ml-4">
-                            <a title="Új kosár">
+                            <a title="Új kosár" (click)="openNewCart()">
                                 <span class="icon has-text-grey">
                                     <i class="fas fa-plus" aria-hidden="true"></i>
+                                </span>
+                            </a>
+                        </p>
+                        <p class="subtitle is-inline-block is-pulled-right">
+                            <span class="mr-4 is-size-6 has-text-danger" *ngIf="isToggleOn">Termék
+                                eltávolítása</span>
+                            <a (click)="cartModeSwitch()" title="Termékek betétele, vagy eltávolítása">
+                                <span class="icon has-text-grey">
+                                    <i class="fas" [class.fa-toggle-off]="!isToggleOn"
+                                        [class.has-text-grey]="!isToggleOn" [class.fa-toggle-on]="isToggleOn"
+                                        [class.has-text-success]="isToggleOn" aria-hidden="true"></i>
                                 </span>
                             </a>
                         </p>
@@ -205,6 +204,14 @@
                                     </td>
                                     <td class="is-narrow">
                                         <a (click)="cartItemPieceSetter.open()">9/9</a>
+                                        <!-- <div class="field has-addons">
+                                            <div class="control">
+                                                <div class="button is-small">+</div>
+                                            </div>
+                                            <div class="control">
+                                                <div class="button is-small">-</div>
+                                            </div>
+                                        </div> -->
                                     </td>
                                     <td class="is-narrow">450.500 Ft</td>
                                 </tr>
@@ -350,6 +357,47 @@
     </table>
 </modal>
 
+<modal #keyboardShortcuts [title]="'Billenytű parancsok listája'">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Billentyű neve</th>
+                <th>Parancs</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>F1</td>
+                <td>Keresés aktiválása</td>
+            </tr>
+            <tr>
+                <td>F2</td>
+                <td>Részletes keresés aktiválása</td>
+            </tr>
+            <tr>
+                <td>F3</td>
+                <td>Nyitott kosarak listája</td>
+            </tr>
+            <tr>
+                <td>F4</td>
+                <td>Új kosár</td>
+            </tr>
+            <tr>
+                <td>F5</td>
+                <td>Kosár lezárása; tovább a fizetéshez</td>
+            </tr>
+            <tr>
+                <td>F6</td>
+                <td>Kosár mód váltás. Termék betétel / kivétel</td>
+            </tr>
+            <tr>
+                <td>F9</td>
+                <td>Billentyű parancsok listája</td>
+            </tr>
+        </tbody>
+    </table>
+</modal>
+
 <modal #uplDetails [title]="'Raktári adatok'">
     <div class="columns is-mobile">
         <div class="column">
@@ -468,7 +516,7 @@
                 <td>{{upl.best_before}}</td>
                 <td>{{upl.gross_retail_price | number}} HUF</td>
                 <td>
-                    <button class="button is-outlined is-danger is-small">Eltávolítás</button>
+                    <!-- <button class="button is-outlined is-danger is-small">Eltávolítás</button> -->
                 </td>
             </tr>
         </tbody>

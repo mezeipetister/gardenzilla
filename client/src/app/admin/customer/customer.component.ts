@@ -38,10 +38,13 @@ export class CustomerComponent implements OnInit {
 
   // Hot keys tutorial
   // https://netbasal.com/diy-keyboard-shortcuts-in-your-angular-application-4704734547a2
-  @HostListener('document:keydown.f1')
+  @HostListener('document:keydown.f3', ['$event'])
   // QueryParams tutorial
   // https://www.digitalocean.com/community/tutorials/angular-query-parameters
-  demo() { this.router.navigate(['./'], { queryParams: this.goto(9), queryParamsHandling: "merge", relativeTo: this.route }); }
+  demo(event: Event) {
+    event.preventDefault();
+    this.router.navigate(['./'], { queryParams: this.goto(9), queryParamsHandling: "merge", relativeTo: this.route });
+  }
 
   goto(page: number): Obj {
     this.params.page = page;

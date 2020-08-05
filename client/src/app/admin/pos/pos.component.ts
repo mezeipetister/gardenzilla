@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef, ComponentRef } from '@angular/core';
 import { Pager } from 'src/app/class/pager';
 import { Profile } from 'src/app/class/profile';
 import { HttpClient } from '@angular/common/http';
@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Observable, from, interval, of, BehaviorSubject, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ModalComponent } from '../partial/modal/modal.component';
 
 @Component({
   selector: 'app-user',
@@ -13,9 +14,13 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./pos.component.scss']
 })
 export class PosComponent implements OnInit {
+  @ViewChild('searchInput') searchInput: ElementRef;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private title: Title) { }
   ngOnInit() { }
+  ngAfterViewInit() {
+    this.searchInputFocus();
+  }
 
   search: string = '';
   life: number = 42;
@@ -63,8 +68,23 @@ export class PosComponent implements OnInit {
     { id: 1231234, sku_name: 'Kerti lombseprű', quantity: 1, unit: 'kg', gross_retail_price: 7900.12, best_before: '2022-04-15' }
   ];
 
+  isToggleOn: boolean = false;
+
   message(msg: string) {
     alert(msg);
+  }
+
+  clearUpls() {
+    confirm("Biztosan eltávolítasz minden UPL-t?");
+  }
+
+  @HostListener('document:keydown.f6', ['$event'])
+  cartModeSwitch(event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.isToggleOn = this.isToggleOn ? false : true;
+    this.searchInputFocus();
   }
 
   checkSearchType() {
@@ -73,6 +93,39 @@ export class PosComponent implements OnInit {
     } else {
       this.isSearchUser = false;
     }
+  }
+
+  @HostListener('document:keydown.f1', ['$event'])
+  searchInputFocus(event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
+    this.clearSearch();
+    this.searchInput.nativeElement.focus();
+  }
+
+  @ViewChild('cartList') cartList: ModalComponent;
+  @HostListener('document:keydown.f3', ['$event'])
+  displayCarts(event: Event) {
+    event.preventDefault();
+    this.cartList.open();
+  }
+
+  @HostListener('document:keydown.f5', ['$event'])
+  closeCart(event: Event) {
+    event.preventDefault();
+    alert('Kosár lezárása');
+  }
+
+  @ViewChild('keyboardShortcuts') keyboardShortcuts: ModalComponent;
+  @HostListener('document:keydown.f9', ['$event'])
+  displayShortcuts(event: Event) {
+    event.preventDefault();
+    this.keyboardShortcuts.open();
+  }
+
+  openNewCart() {
+    confirm("Biztosan új kosarat nyitsz?");
   }
 
   clearSearch() {
