@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef, ComponentRef } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef, ComponentRef, ViewChildren } from '@angular/core';
 import { Pager } from 'src/app/class/pager';
 import { Profile } from 'src/app/class/profile';
 import { HttpClient } from '@angular/common/http';
@@ -106,7 +106,7 @@ export class PosComponent implements OnInit {
     }
   }
 
-  @ViewChild('searchInput', { read: ElementRef, static: false }) searchInput: ElementRef;
+  @ViewChild('searchInput') searchInput: ElementRef;
   @HostListener('document:keydown.f1', ['$event'])
   searchInputFocus(event?: Event) {
     if (event) {
@@ -136,6 +136,18 @@ export class PosComponent implements OnInit {
   displayShortcuts(event: Event) {
     event.preventDefault();
     this.keyboardShortcuts.open();
+  }
+
+  // Check if there is any input field, that has focus
+  checkDocumentHasAnyFocus(): boolean {
+    let hasAnyFocus: boolean = false;
+    let list = document.getElementsByTagName("input");
+    for (var i = 0; i < list.length; i++) {
+      if (list[i] === document.activeElement) {
+        hasAnyFocus = true;
+      }
+    }
+    return hasAnyFocus;
   }
 
   processUpl(query: string): number {
