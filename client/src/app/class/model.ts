@@ -43,8 +43,10 @@ export class Model<T> {
                 this.status.next(this.data);
                 // If there is content
                 // set it to the new data value
-                if (val.length > 0) {
-                    this.data = val;
+                if (val) {
+                    if (val.length > 0) {
+                        this.data = val;
+                    }
                 }
             },
             error: (err) => {

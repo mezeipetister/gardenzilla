@@ -39,6 +39,7 @@ import { PosLayoutComponent } from './layout/pos-layout/pos-layout.component';
 import { PagernavComponent } from './partial/pagernav/pagernav.component';
 import { StockComponent } from './stock/stock.component';
 import { ModalComponent } from './partial/modal/modal.component';
+import { ProductComponent } from './product/product.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { ModalComponent } from './partial/modal/modal.component';
     TransactionComponent,
     AssetComponent,
     ProjectComponent,
+    ProductComponent,
     AccountComponent,
     SettingComponent,
     DashboardComponent,

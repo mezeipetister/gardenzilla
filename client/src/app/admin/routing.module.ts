@@ -30,11 +30,17 @@ import { CustomerComponent } from './customer/customer.component';
 import { PosComponent } from './pos/pos.component';
 import { PosLayoutComponent } from './layout/pos-layout/pos-layout.component';
 import { StockComponent } from './stock/stock.component';
+import { ProductComponent } from './product/product.component';
 
 const routes: Routes = [
   {
     path: 'pos', component: PosLayoutComponent, canActivateChild: [AuthGuard], children: [
       { path: '', component: PosComponent, data: { title: "POS" } }
+    ]
+  },
+  {
+    path: 'product', component: PosLayoutComponent, canActivateChild: [AuthGuard], children: [
+      { path: '', component: ProductComponent, data: { title: "Termékek" } }
     ]
   },
   {

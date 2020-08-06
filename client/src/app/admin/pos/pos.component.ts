@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, ViewChild, ElementRef, ComponentRef, ViewChildren } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, ElementRef, ComponentRef, ViewChildren, Host } from '@angular/core';
 import { Pager } from 'src/app/class/pager';
 import { Profile } from 'src/app/class/profile';
 import { HttpClient } from '@angular/common/http';
@@ -18,6 +18,7 @@ export class PosComponent implements OnInit {
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private title: Title) { }
   ngOnInit() { }
+
   ngAfterViewInit() {
     this.searchInputFocus();
   }
@@ -80,14 +81,35 @@ export class PosComponent implements OnInit {
 
   searchEnter(event) {
     let query = event.target.value;
-    let upl = this.processUpl(query);
-    if (upl) {
-      console.log('UPL is ' + upl.toString());
-      this.search = upl.toString();
+    // Check if customer search
+    if (this.isSearchUser) {
+      console.log("User search " + query);
     } else {
-      console.log('No upl! Query is: ' + query);
+      // Check if there is upl
+      let upl = this.processUpl(query);
+      if (upl) {
+        if (!this.isToggleOn) {
+          console.log('UPL IN ' + upl.toString());
+        } else {
+          console.log('UPL OUT ', upl.toString());
+        }
+        this.search = upl.toString();
+      } else {
+        console.log('SKU search ' + query);
+      }
     }
   }
+
+  // @HostListener('document:keydown.f7', ['$event'])
+  // demoUsb(event: Event) {
+  //   event.preventDefault();
+  //   navigator.usb.requestDevice({ filters: [{ vendorId: 0x2341 }] })
+  //     .then(device => {
+  //       console.log(device.productName);      // "Arduino Micro"
+  //       console.log(device.manufacturerName); // "Arduino LLC"
+  //     })
+  //     .catch(error => { console.log(error); });
+  // }
 
   @HostListener('document:keydown.f6', ['$event'])
   cartModeSwitch(event?: Event) {
@@ -120,21 +142,27 @@ export class PosComponent implements OnInit {
 
   @ViewChild('cartList') cartList: ModalComponent;
   @HostListener('document:keydown.f3', ['$event'])
-  displayCarts(event: Event) {
-    event.preventDefault();
+  displayCarts(event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
     this.cartList.open();
   }
 
   @HostListener('document:keydown.f5', ['$event'])
-  closeCart(event: Event) {
-    event.preventDefault();
+  closeCart(event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
     alert('Kosár lezárása');
   }
 
   @ViewChild('keyboardShortcuts') keyboardShortcuts: ModalComponent;
   @HostListener('document:keydown.f9', ['$event'])
-  displayShortcuts(event: Event) {
-    event.preventDefault();
+  displayShortcuts(event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
     this.keyboardShortcuts.open();
   }
 
